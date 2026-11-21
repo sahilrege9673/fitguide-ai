@@ -5,7 +5,7 @@ from fastapi.exceptions import RequestValidationError
 from datetime import datetime, timezone
 
 from app.core.config import settings
-from app.routers.v1 import health, auth, onboarding
+from app.routers.v1 import health, auth, onboarding, exercises, workouts, schedule, profile
 
 app = FastAPI(
     title="FeedGuide AI API",
@@ -51,6 +51,10 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 app.include_router(health.router, prefix=settings.API_V1_PREFIX)
 app.include_router(auth.router, prefix=settings.API_V1_PREFIX)
 app.include_router(onboarding.router, prefix=settings.API_V1_PREFIX)
+app.include_router(exercises.router, prefix=settings.API_V1_PREFIX)
+app.include_router(workouts.router, prefix=settings.API_V1_PREFIX)
+app.include_router(schedule.router, prefix=settings.API_V1_PREFIX)
+app.include_router(profile.router, prefix=settings.API_V1_PREFIX)
 
 @app.get("/")
 def root():

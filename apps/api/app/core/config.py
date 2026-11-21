@@ -1,5 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import List
+from pydantic import field_validator
+from typing import List, Union, Any
+import json
 import os
 
 class Settings(BaseSettings):
@@ -7,11 +9,28 @@ class Settings(BaseSettings):
     PORT: int = 8000
     HOST: str = "0.0.0.0"
     API_V1_PREFIX: str = "/api/v1"
-    CORS_ORIGINS: List[str] = [
+    CORS_ORIGINS: Union[List[str], str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "https://feedguide.vercel.app"
     ]
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Any) -> List[str]:
+        if isinstance(v, list):
+            return [str(item).strip() for item in v]
+        if isinstance(v, str):
+            v = v.strip()
+            if v.startswith("[") and v.endswith("]"):
+                try:
+                    parsed = json.loads(v)
+                    if isinstance(parsed, list):
+                        return [str(x).strip() for x in parsed]
+                except Exception:
+                    pass
+            return [x.strip() for x in v.split(",") if x.strip()]
+        return []
 
     # Supabase Configuration
     SUPABASE_URL: str = "https://mock.supabase.co"
