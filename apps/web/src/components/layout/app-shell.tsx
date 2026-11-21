@@ -29,7 +29,7 @@ const NAV_ITEMS = [
   { name: 'Workouts', href: '/workouts', icon: Dumbbell },
   { name: 'Schedule', href: '/schedule', icon: Calendar },
   { name: 'Exercise Library', href: '/exercises', icon: BookOpen },
-  { name: 'AI Assistant', href: '/assistant', icon: MessageSquare, badge: 'Phase 3' },
+  { name: 'AI Assistant', href: '/assistant', icon: MessageSquare },
   { name: 'Progress', href: '/progress', icon: TrendingUp, badge: 'Phase 6' },
   { name: 'Profile', href: '/profile', icon: User },
 ];
