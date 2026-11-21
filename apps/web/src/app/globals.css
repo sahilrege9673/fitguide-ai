@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-carbon-black: #171B18;
+  --color-forest-green: #26372D;
+  --color-athletic-lime: #C4E76B;
+  --color-warm-chalk: #E8E5D9;
+  --color-muted-sand: #B5A78D;
+  --color-burnt-orange: #C8794D;
+
+  --background: #171B18;
+  --foreground: #E8E5D9;
+}
+
+@layer base {
+  * {
+    border-color: #26372D;
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body), 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), 'Space Grotesk', sans-serif;
+  }
+
+  ::selection {
+    background-color: #C4E76B;
+    color: #171B18;
+  }
+
+  /* Universal high-visibility athletic focus rings */
+  :focus-visible {
+    outline: 2px solid #C4E76B !important;
+    outline-offset: 2px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
