@@ -117,13 +117,15 @@ def _supabase_fetch_messages(conversation_id: UUID) -> Optional[List[Dict[str, A
                 for row in data:
                     m_id = UUID(row["id"])
                     dt_created = datetime.fromisoformat(row["created_at"].replace("Z", "+00:00")) if isinstance(row["created_at"], str) else row["created_at"]
+                    raw_rec = row.get("structured_data")
+                    rec = raw_rec if (raw_rec and isinstance(raw_rec, dict) and raw_rec.get("title")) else None
                     msg = {
                         "id": m_id,
                         "conversation_id": conversation_id,
                         "sender_role": row["sender_role"],
                         "content": row["content"],
                         "citations": row.get("citations"),
-                        "recommendation": row.get("structured_data"),
+                        "recommendation": rec,
                         "created_at": dt_created
                     }
                     results.append(msg)
@@ -208,7 +210,7 @@ class ChatService:
                 sender_role=m["sender_role"],
                 content=m["content"],
                 citations=m.get("citations"),
-                recommendation=m.get("recommendation"),
+                recommendation=m.get("recommendation") if (m.get("recommendation") and isinstance(m.get("recommendation"), dict) and m.get("recommendation", {}).get("title")) else None,
                 created_at=m["created_at"].isoformat() if isinstance(m["created_at"], datetime) else str(m["created_at"])
             )
             for m in msgs

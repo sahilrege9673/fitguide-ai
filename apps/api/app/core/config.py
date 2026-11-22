@@ -46,7 +46,7 @@ class Settings(BaseSettings):
     CHAT_RATE_LIMIT_PER_MINUTE: int = 15
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=[".env", "apps/api/.env"],
         env_file_encoding="utf-8",
         extra="ignore"
     )
