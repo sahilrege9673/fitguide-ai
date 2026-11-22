@@ -53,7 +53,8 @@ def get_current_user(
                 token,
                 settings.SUPABASE_JWT_SECRET,
                 algorithms=["HS256"],
-                options={"verify_aud": False}
+                leeway=60,
+                options={"verify_aud": False, "verify_iat": False}
             )
         elif alg in ["ES256", "RS256"]:
             client = get_jwks_client()
@@ -64,7 +65,8 @@ def get_current_user(
                         token,
                         signing_key.key,
                         algorithms=[alg],
-                        options={"verify_aud": False}
+                        leeway=60,
+                        options={"verify_aud": False, "verify_iat": False}
                     )
                 except Exception:
                     pass
