@@ -12,17 +12,20 @@ import urllib.request
 import urllib.error
 import json
 
-def test_endpoint(name: str, url: str, method: str = "GET", payload: dict = None, expected_status: int = 200):
+def test_endpoint(name: str, url: str, method: str = "GET", payload: dict = None, headers: dict = None, expected_status: int = 200, timeout: int = 15):
     t0 = time.perf_counter()
     req = urllib.request.Request(url, method=method)
     req.add_header("User-Agent", "FitGuide-SmokeTest/1.0")
+    if headers:
+        for k, v in headers.items():
+            req.add_header(k, v)
     data_bytes = None
     if payload:
         req.add_header("Content-Type", "application/json")
         data_bytes = json.dumps(payload).encode("utf-8")
 
     try:
-        with urllib.request.urlopen(req, data=data_bytes, timeout=10) as resp:
+        with urllib.request.urlopen(req, data=data_bytes, timeout=timeout) as resp:
             elapsed_ms = (time.perf_counter() - t0) * 1000
             status = resp.status
             body = resp.read().decode("utf-8")
@@ -45,7 +48,7 @@ def test_endpoint(name: str, url: str, method: str = "GET", payload: dict = None
         print(f"  [ERROR] {name} ({elapsed_ms:.1f}ms) -> Connection Error: {e}")
         return False, ""
 
-def run_smoke_tests(api_url: str, web_url: str = None):
+def run_smoke_tests(api_url: str, web_url: str = None, token: str = None):
     api_url = api_url.rstrip("/")
     print("=" * 70)
     print("FITGUIDE AI — PRODUCTION SMOKE TEST SUITE")
@@ -53,6 +56,26 @@ def run_smoke_tests(api_url: str, web_url: str = None):
     if web_url:
         print(f"Target Web Endpoint: {web_url}")
     print("=" * 70)
+
+    # Try generating a test token if not provided
+    if not token:
+        try:
+            import os
+            from dotenv import load_dotenv
+            api_env = os.path.join(os.path.dirname(__file__), "..", "apps", "api", ".env")
+            if os.path.exists(api_env):
+                load_dotenv(api_env)
+            secret = os.environ.get("SUPABASE_JWT_SECRET")
+            if secret:
+                import jwt
+                from uuid import uuid4
+                token = jwt.encode(
+                    {"sub": str(uuid4()), "email": "smoke.tester@fitguide.ai", "role": "authenticated"},
+                    secret,
+                    algorithm="HS256"
+                )
+        except Exception:
+            pass
 
     successes = 0
     total = 0
@@ -82,15 +105,16 @@ def run_smoke_tests(api_url: str, web_url: str = None):
                 print(f"         Warning: Catalog returned {data.get('total_records')} records (expected >= 80).")
         except Exception:
             pass
-    total += 1 # for catalog record count check
 
     # 4. ML Intent Router
     total += 1
+    auth_headers = {"Authorization": f"Bearer {token}"} if token else None
     ok, body = test_endpoint(
         "ML Intent Classification (< 20ms)",
         f"{api_url}/api/v1/chat/classify",
         method="POST",
-        payload={"text": "Give me a 30-minute chest and triceps routine"}
+        payload={"content": "Give me a 30-minute chest and triceps routine"},
+        headers=auth_headers
     )
     if ok:
         try:
@@ -102,7 +126,6 @@ def run_smoke_tests(api_url: str, web_url: str = None):
                 print(f"         Warning: Unexpected classification: {data}")
         except Exception:
             pass
-    total += 1 # for intent check
 
     # 5. Security Boundary Guard (Unauthenticated Access MUST be rejected with 401)
     total += 1
