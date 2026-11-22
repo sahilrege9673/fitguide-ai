@@ -8,7 +8,7 @@ from app.core.config import settings
 from app.routers.v1 import health, auth, onboarding, exercises, workouts, schedule, profile, chat, progress
 
 app = FastAPI(
-    title="FeedGuide AI API",
+    title="FitGuide AI API",
     description="Engineered Fitness Companion API with strict safety guardrails and RLS isolation.",
     version="1.0.0",
     docs_url="/docs",
@@ -61,7 +61,7 @@ app.include_router(progress.router, prefix=settings.API_V1_PREFIX)
 @app.get("/")
 def root():
     return {
-        "service": "FeedGuide AI API",
+        "service": "FitGuide AI API",
         "status": "operational",
         "api_docs": "/docs",
         "api_version": "v1"

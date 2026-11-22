@@ -1,5 +1,5 @@
 """
-FeedGuide AI — Safety & Clinical Guardrails Engine (v1.0.0)
+FitGuide AI — Safety & Clinical Guardrails Engine (v1.0.0)
 Deterministic invariant enforcement for user safety and age appropriateness.
 """
 

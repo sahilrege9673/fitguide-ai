@@ -8,7 +8,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-2 group">
           <span className="h-3 w-3 bg-lime rounded-none" />
           <span className="font-display text-xl font-bold tracking-tighter text-chalk group-hover:text-lime transition-colors duration-fast">
-            FEEDGUIDE<span className="text-lime">.AI</span>
+            FITGUIDE<span className="text-lime">.AI</span>
           </span>
           <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-widest text-sand border border-forest px-1.5 py-0.5 ml-1">
             LAB V1.0

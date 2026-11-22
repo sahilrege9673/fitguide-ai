@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FeedGuide AI — Production Health & Smoke Test Suite
+FitGuide AI — Production Health & Smoke Test Suite
 Verifies API availability, security boundaries, exercise catalog, ML intent routing,
 and frontend availability against either local dev or deployed production endpoints.
 """
@@ -15,7 +15,7 @@ import json
 def test_endpoint(name: str, url: str, method: str = "GET", payload: dict = None, expected_status: int = 200):
     t0 = time.perf_counter()
     req = urllib.request.Request(url, method=method)
-    req.add_header("User-Agent", "FeedGuide-SmokeTest/1.0")
+    req.add_header("User-Agent", "FitGuide-SmokeTest/1.0")
     data_bytes = None
     if payload:
         req.add_header("Content-Type", "application/json")
@@ -48,7 +48,7 @@ def test_endpoint(name: str, url: str, method: str = "GET", payload: dict = None
 def run_smoke_tests(api_url: str, web_url: str = None):
     api_url = api_url.rstrip("/")
     print("=" * 70)
-    print("FEEDGUIDE AI — PRODUCTION SMOKE TEST SUITE")
+    print("FITGUIDE AI — PRODUCTION SMOKE TEST SUITE")
     print(f"Target API Endpoint: {api_url}")
     if web_url:
         print(f"Target Web Endpoint: {web_url}")
@@ -131,7 +131,7 @@ def run_smoke_tests(api_url: str, web_url: str = None):
         return 1
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="FeedGuide AI Production Smoke Test")
+    parser = argparse.ArgumentParser(description="FitGuide AI Production Smoke Test")
     parser.add_argument("--api-url", default="http://localhost:8000", help="Base URL of FastAPI API")
     parser.add_argument("--web-url", default=None, help="Base URL of Next.js frontend (optional)")
     args = parser.parse_args()

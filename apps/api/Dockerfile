@@ -1,5 +1,5 @@
 # ----------------------------------------------------
-# Multi-stage production Dockerfile for FeedGuide AI API
+# Multi-stage production Dockerfile for FitGuide AI API
 # ----------------------------------------------------
 FROM python:3.12-slim AS builder
 

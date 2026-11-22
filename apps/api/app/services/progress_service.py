@@ -412,7 +412,7 @@ class ProgressService:
         # 1. ATHLETIC HEADER BANNER
         header_table_data = [
             [
-                Paragraph("<b>FEEDGUIDE AI</b> | PERFORMANCE REPORT", style_header_brand),
+                Paragraph("<b>FITGUIDE AI</b> | PERFORMANCE REPORT", style_header_brand),
                 Paragraph(f"ATHLETE: <b>{user_name.upper()}</b><br/>WINDOW: <b>{summary.start_date} → {summary.end_date}</b>", style_header_sub)
             ]
         ]
@@ -592,7 +592,7 @@ class ProgressService:
 
         # 7. SAFETY & MEDICAL DISCLAIMER
         disclaimer_text = (
-            "SAFETY & MEDICAL NOTICE: FeedGuide AI is an educational fitness and athletic companion, not a licensed medical provider. "
+            "SAFETY & MEDICAL NOTICE: FitGuide AI is an educational fitness and athletic companion, not a licensed medical provider. "
             "Data in this report represents recorded workout telemetry. Consult a physician before beginning any new training program. "
             "Never train through acute pain, dizziness, or cardiac distress."
         )

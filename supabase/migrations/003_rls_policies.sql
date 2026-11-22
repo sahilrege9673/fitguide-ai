@@ -1,5 +1,5 @@
 -- ==============================================================================
--- FeedGuide AI — Migration 003: Row-Level Security (RLS) Policies
+-- FitGuide AI — Migration 003: Row-Level Security (RLS) Policies
 -- ==============================================================================
 
 -- Enable RLS on every table

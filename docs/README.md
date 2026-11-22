@@ -1,6 +1,6 @@
-# FeedGuide AI — Architecture & Planning Documentation (Phase 0)
+# FitGuide AI — Architecture & Planning Documentation (Phase 0)
 
-Welcome to the architectural specification for **FeedGuide AI**, a secure, responsive, high-performance digital fitness companion and workout management platform.
+Welcome to the architectural specification for **FitGuide AI**, a secure, responsive, high-performance digital fitness companion and workout management platform.
 
 This directory contains the complete Phase 0 system architecture, database schema, API contracts, security models, safety specifications, and design system.
 

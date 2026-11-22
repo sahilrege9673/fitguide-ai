@@ -80,10 +80,10 @@ class IngestionPipeline:
     def parse_metadata_header(cls, file_content: str, filename: str) -> tuple[DocumentMetadata, str]:
         lines = file_content.splitlines()
         meta_dict: Dict[str, Any] = {
-            "document_id": str(uuid5(NAMESPACE_DNS, f"feedguide.doc.{filename}")),
+            "document_id": str(uuid5(NAMESPACE_DNS, f"fitguide.doc.{filename}")),
             "title": filename.replace(".md", "").replace("_", " ").title(),
             "source_name": "Health Guidelines",
-            "source_url": "https://feedguide.ai/sources",
+            "source_url": "https://fitguide.ai/sources",
             "license_type": "Public Guidance",
             "category": "general_fitness",
             "target_age_groups": ["adult_18_64"]
@@ -139,7 +139,7 @@ class IngestionPipeline:
             text_chunks = chunker.chunk_text(body)
 
             for idx, text in enumerate(text_chunks):
-                chunk_id = str(uuid5(NAMESPACE_DNS, f"feedguide.chunk.{filename}.{idx}"))
+                chunk_id = str(uuid5(NAMESPACE_DNS, f"fitguide.chunk.{filename}.{idx}"))
                 token_count = max(1, len(text.split()) * 4 // 3)
 
                 chunk = DocumentChunk(

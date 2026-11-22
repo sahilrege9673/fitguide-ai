@@ -2,9 +2,9 @@
 
 ## 1. Executive Summary & Product Requirements
 
-**FeedGuide AI** is an intelligent, personalized digital fitness companion and workout management platform engineered to deliver age-appropriate, grounded fitness planning, progress analytics, and interactive coaching.
+**FitGuide AI** is an intelligent, personalized digital fitness companion and workout management platform engineered to deliver age-appropriate, grounded fitness planning, progress analytics, and interactive coaching.
 
-Unlike generic fitness chatbots or template-driven workout generators, FeedGuide AI grounds every decision, recommendation, and chat response in:
+Unlike generic fitness chatbots or template-driven workout generators, FitGuide AI grounds every decision, recommendation, and chat response in:
 1. The user's verified onboarding profile (age group, fitness goals, experience level, workout location, available equipment, preferred activities, available time, preferred workout days).
 2. Their active weekly schedule and recovery status.
 3. Their real completed workout session logs and historical feedback.
@@ -84,7 +84,7 @@ To achieve production-grade reliability, sub-second API latency, strict user dat
 The codebase is organized as a clean, decoupled monorepo:
 
 ```
-feedguide-ai/
+fitguide-ai/
 ├── apps/
 │   ├── web/                           # Next.js 14+ App Router frontend
 │   │   ├── public/                    # Static assets, certified exercise SVGs/placeholders

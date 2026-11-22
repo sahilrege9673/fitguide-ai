@@ -2,7 +2,7 @@
 
 ## 1. AI System Overview & Service Abstraction
 
-FeedGuide AI integrates artificial intelligence through a decoupled, multi-layered architecture:
+FitGuide AI integrates artificial intelligence through a decoupled, multi-layered architecture:
 
 ```
 ┌────────────────────────────────────────────────────────┐

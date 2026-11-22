@@ -2,7 +2,7 @@
 
 ## 1. Brand Identity: Urban Performance / Premium Athletic
 
-FeedGuide AI embodies the physical discipline, architectural precision, and functional beauty of a high-end athletic performance laboratory. It rejects generic corporate SaaS tropes (indigo gradients, rounded purple bubbles, cartoon illustrations, glowing neon borders) in favor of high-contrast, editorial typography, purposeful negative space, razor-sharp geometric alignment, and authentic athletic data representation.
+FitGuide AI embodies the physical discipline, architectural precision, and functional beauty of a high-end athletic performance laboratory. It rejects generic corporate SaaS tropes (indigo gradients, rounded purple bubbles, cartoon illustrations, glowing neon borders) in favor of high-contrast, editorial typography, purposeful negative space, razor-sharp geometric alignment, and authentic athletic data representation.
 
 ---
 

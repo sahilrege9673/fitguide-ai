@@ -1,9 +1,9 @@
 services:
   # ----------------------------------------------------
-  # FeedGuide AI — Production FastAPI Backend Web Service
+  # FitGuide AI — Production FastAPI Backend Web Service
   # ----------------------------------------------------
   - type: web
-    name: feedguide-api
+    name: fitguide-api
     runtime: python
     rootDir: apps/api
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
@@ -27,6 +27,6 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: CORS_ORIGINS
-        value: "https://feedguide.vercel.app,https://feedguide-ai.vercel.app,http://localhost:3000"
+        value: "https://fitguide.vercel.app,https://fitguide-ai.vercel.app,http://localhost:3000"
       - key: CHAT_RATE_LIMIT_PER_MINUTE
         value: "15"

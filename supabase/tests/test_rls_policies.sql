@@ -1,5 +1,5 @@
 -- ==============================================================================
--- FeedGuide AI — RLS Policy Test Matrix & Verification Script
+-- FitGuide AI — RLS Policy Test Matrix & Verification Script
 -- ==============================================================================
 -- Description:
 -- Tests isolation between User A and User B.

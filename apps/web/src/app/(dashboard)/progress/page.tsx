@@ -119,7 +119,7 @@ export default function ProgressPage() {
       const downloadUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = downloadUrl;
-      a.download = `feedguide-performance-report-${timeframe}.pdf`;
+      a.download = `fitguide-performance-report-${timeframe}.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();

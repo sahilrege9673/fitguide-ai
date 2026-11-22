@@ -2,7 +2,7 @@
 
 ## 1. Operating Rules & Verification Gate Protocol
 
-FeedGuide AI is constructed in **strictly sequential phases** (Phases 0 through 7).
+FitGuide AI is constructed in **strictly sequential phases** (Phases 0 through 7).
 Advancing to a subsequent phase is prohibited until all exit criteria for the current phase are verified and explicit user approval is granted.
 
 ### Strict Non-Regression Invariants:

@@ -9,7 +9,7 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <span className="h-2.5 w-2.5 bg-lime" />
               <span className="font-display text-lg font-bold tracking-tight text-chalk">
-                FEEDGUIDE<span className="text-lime">.AI</span>
+                FITGUIDE<span className="text-lime">.AI</span>
               </span>
             </div>
             <p className="text-sm text-sand/80 max-w-md leading-relaxed">
@@ -45,12 +45,12 @@ export function Footer() {
             [ CLINICAL & FITNESS DISCLAIMER ]
           </p>
           <p>
-            FeedGuide AI provides evidence-based exercise guidance and activity tracking for general wellness. It is not a substitute for clinical medical advice, diagnosis, or personalized physical therapy. Always consult a qualified healthcare provider prior to starting any new training regimen, especially if you have pre-existing conditions, injuries, or cardiovascular symptoms.
+            FitGuide AI provides evidence-based exercise guidance and activity tracking for general wellness. It is not a substitute for clinical medical advice, diagnosis, or personalized physical therapy. Always consult a qualified healthcare provider prior to starting any new training regimen, especially if you have pre-existing conditions, injuries, or cardiovascular symptoms.
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between border-t border-forest/40 pt-6 text-xs text-sand/60 font-mono">
-          <p>&copy; {new Date().getFullYear()} FeedGuide AI. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} FitGuide AI. All rights reserved.</p>
           <p className="mt-2 sm:mt-0">Urban Performance / Premium Athletic Identity</p>
         </div>
       </div>

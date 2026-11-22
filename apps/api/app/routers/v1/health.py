@@ -7,7 +7,7 @@ router = APIRouter(tags=["Health"])
 def health_check():
     return {
         "status": "healthy",
-        "service": "FeedGuide AI API",
+        "service": "FitGuide AI API",
         "version": "1.0.0",
         "timestamp": datetime.now(timezone.utc).isoformat()
     }

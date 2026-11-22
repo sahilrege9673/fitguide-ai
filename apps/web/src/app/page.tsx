@@ -32,7 +32,7 @@ export default function LandingPage() {
                 </h1>
 
                 <p className="text-base sm:text-lg text-sand leading-relaxed max-w-2xl">
-                  Not a generic chatbot or template generator. FeedGuide AI is an engineered digital fitness companion that sequences your training around your verified physiology, equipment constraints, and real logged recovery.
+                  Not a generic chatbot or template generator. FitGuide AI is an engineered digital fitness companion that sequences your training around your verified physiology, equipment constraints, and real logged recovery.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
@@ -137,7 +137,7 @@ export default function LandingPage() {
             <div className="max-w-2xl mb-16">
               <Badge variant="sand" className="mb-3">ENGINEERING PRINCIPLES</Badge>
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-chalk uppercase">
-                WHY FEEDGUIDE AI DEPARTS FROM GENERIC SAAS
+                WHY FITGUIDE AI DEPARTS FROM GENERIC SAAS
               </h2>
             </div>
 
@@ -205,7 +205,7 @@ export default function LandingPage() {
                   NON-NEGOTIABLE CLINICAL GUARDRAILS
                 </h2>
                 <p className="text-sm text-sand leading-relaxed">
-                  Most AI fitness tools hallucinate dangerous advice when users report pain or ask for extreme diets. FeedGuide AI embeds deterministic rule checks before and after every LLM generation.
+                  Most AI fitness tools hallucinate dangerous advice when users report pain or ask for extreme diets. FitGuide AI embeds deterministic rule checks before and after every LLM generation.
                 </p>
                 <ul className="space-y-3 pt-2 text-sm text-chalk font-mono">
                   <li className="flex items-center gap-2">

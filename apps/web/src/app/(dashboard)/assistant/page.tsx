@@ -459,7 +459,7 @@ export default function AssistantPage() {
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
               <h1 className="font-heading font-bold text-chalk text-base tracking-tight truncate">
-                {activeConv?.title || 'FeedGuide Athletic Assistant'}
+                {activeConv?.title || 'FitGuide Athletic Assistant'}
               </h1>
               <Badge variant="outline" className="border-forest text-sand text-[10px]">
                 Gemini 3.5 Flash
@@ -478,7 +478,7 @@ export default function AssistantPage() {
           <div className="bg-forest/30 border border-forest/80 rounded px-3 py-2 flex items-start gap-2 text-[11px] text-sand leading-relaxed">
             <Info className="w-4 h-4 text-lime shrink-0 mt-0.5" />
             <div>
-              <strong className="text-chalk font-semibold">Athletic Guidance Disclaimer:</strong> FeedGuide AI provides evidence-based athletic and movement guidance, not medical diagnosis or clinical treatment. If experiencing chest pain, dizziness, or acute joint pain, stop physical activity immediately and consult emergency healthcare.
+              <strong className="text-chalk font-semibold">Athletic Guidance Disclaimer:</strong> FitGuide AI provides evidence-based athletic and movement guidance, not medical diagnosis or clinical treatment. If experiencing chest pain, dizziness, or acute joint pain, stop physical activity immediately and consult emergency healthcare.
             </div>
           </div>
         </header>
@@ -504,7 +504,7 @@ export default function AssistantPage() {
               </div>
               <div className="space-y-2">
                 <h3 className="font-heading font-bold text-chalk text-xl tracking-tight">
-                  FeedGuide AI Training Assistant
+                  FitGuide AI Training Assistant
                 </h3>
                 <p className="text-sand text-sm max-w-md mx-auto">
                   Ask questions about movement mechanics, exercise substitutions, recovery pacing, or request structured session recommendations.
@@ -544,7 +544,7 @@ export default function AssistantPage() {
                     className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
                   >
                     <div className="flex items-center gap-2 mb-1 text-[11px] font-mono text-sand">
-                      <span>{isUser ? 'You' : 'FeedGuide AI'}</span>
+                      <span>{isUser ? 'You' : 'FitGuide AI'}</span>
                       <span>•</span>
                       <span>{new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>

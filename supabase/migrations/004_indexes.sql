@@ -1,5 +1,5 @@
 -- ==============================================================================
--- FeedGuide AI — Migration 004: Performance & HNSW Vector Indexes
+-- FitGuide AI — Migration 004: Performance & HNSW Vector Indexes
 -- ==============================================================================
 
 -- 1. HNSW Vector Index for Knowledge Chunks (Cosine Distance)

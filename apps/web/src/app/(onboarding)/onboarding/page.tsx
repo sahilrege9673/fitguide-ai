@@ -88,7 +88,7 @@ export default function OnboardingPage() {
         }
 
         // Try to load saved draft from local storage
-        const savedDraft = localStorage.getItem('feedguide_onboarding_draft');
+        const savedDraft = localStorage.getItem('fitguide_onboarding_draft');
         if (savedDraft) {
           try {
             setFormData(JSON.parse(savedDraft));
@@ -119,7 +119,7 @@ export default function OnboardingPage() {
   const updateForm = (updates: Partial<OnboardingFormState>) => {
     setFormData((prev) => {
       const next = { ...prev, ...updates };
-      localStorage.setItem('feedguide_onboarding_draft', JSON.stringify(next));
+      localStorage.setItem('fitguide_onboarding_draft', JSON.stringify(next));
       return next;
     });
   };
@@ -176,7 +176,7 @@ export default function OnboardingPage() {
         body: JSON.stringify(formData),
       });
 
-      localStorage.removeItem('feedguide_onboarding_draft');
+      localStorage.removeItem('fitguide_onboarding_draft');
       router.push('/dashboard');
       router.refresh();
     } catch (err: unknown) {
@@ -210,7 +210,7 @@ export default function OnboardingPage() {
           <div className="inline-flex items-center gap-2">
             <span className="h-2.5 w-2.5 bg-lime" />
             <span className="font-display text-lg font-bold tracking-tight text-chalk">
-              FEEDGUIDE<span className="text-lime">.AI</span> // ATHLETE ONBOARDING
+              FITGUIDE<span className="text-lime">.AI</span> // ATHLETE ONBOARDING
             </span>
           </div>
 
@@ -241,7 +241,7 @@ export default function OnboardingPage() {
             <CardHeader>
               <CardTitle>Biological Age &amp; Category</CardTitle>
               <CardDescription>
-                FeedGuide AI enforces age-specific clinical guardrails. Minors receive motor-skill programming with zero 1RM max-effort lifting. Seniors receive fall-prevention and low-impact work.
+                FitGuide AI enforces age-specific clinical guardrails. Minors receive motor-skill programming with zero 1RM max-effort lifting. Seniors receive fall-prevention and low-impact work.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -521,7 +521,7 @@ export default function OnboardingPage() {
                   />
                   <label htmlFor="disclaimer-checkbox" className="text-xs text-chalk leading-relaxed cursor-pointer select-none">
                     <span className="font-semibold text-lime">I acknowledge and accept the Health &amp; Fitness Disclaimer:</span>{' '}
-                    FeedGuide AI provides evidence-based athletic guidance and activity tracking for general wellness. It is not a clinical medical service, physical therapy clinic, or emergency diagnostic tool. I certify that I am physically fit to participate in progressive exercise or have received medical clearance.
+                    FitGuide AI provides evidence-based athletic guidance and activity tracking for general wellness. It is not a clinical medical service, physical therapy clinic, or emergency diagnostic tool. I certify that I am physically fit to participate in progressive exercise or have received medical clearance.
                   </label>
                 </div>
               </div>

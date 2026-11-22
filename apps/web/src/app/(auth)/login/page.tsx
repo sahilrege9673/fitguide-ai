@@ -82,7 +82,7 @@ export default function LoginPage() {
           <Link href="/" className="inline-flex items-center gap-2 group">
             <span className="h-3 w-3 bg-lime" />
             <span className="font-display text-2xl font-bold tracking-tighter text-chalk">
-              FEEDGUIDE<span className="text-lime">.AI</span>
+              FITGUIDE<span className="text-lime">.AI</span>
             </span>
           </Link>
           <p className="text-xs font-mono uppercase tracking-widest text-sand">

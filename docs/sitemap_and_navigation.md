@@ -2,7 +2,7 @@
 
 ## 1. Information Architecture & Route Tree
 
-FeedGuide AI utilizes Next.js App Router with segregated route groups to guarantee clean layout inheritance, strict middleware session verification, and clear separation of public, onboarding, and authenticated application states.
+FitGuide AI utilizes Next.js App Router with segregated route groups to guarantee clean layout inheritance, strict middleware session verification, and clear separation of public, onboarding, and authenticated application states.
 
 ```
 / (Root)
@@ -59,11 +59,11 @@ FeedGuide AI utilizes Next.js App Router with segregated route groups to guarant
 
 ## 2. Navigation Architecture: Desktop Rail vs. Mobile Bottom Nav
 
-To deliver an authentic athletic tech experience that feels native on both mobile devices and wide desktop displays, FeedGuide AI employs distinct navigation paradigms:
+To deliver an authentic athletic tech experience that feels native on both mobile devices and wide desktop displays, FitGuide AI employs distinct navigation paradigms:
 
 ### 2.1 Desktop Navigation (Viewport >= 1024px)
 - **Persistent Left Rail**: Fixed width (256px), dark surface (`#171B18`), subtle border (`#26372D`).
-- **Brand Header**: Minimalist FeedGuide AI wordmark with Athletic Lime (`#C4E76B`) status indicator.
+- **Brand Header**: Minimalist FitGuide AI wordmark with Athletic Lime (`#C4E76B`) status indicator.
 - **Primary Nav Links**:
   1. **Dashboard** (`/dashboard`)
   2. **Workouts** (`/workouts`)

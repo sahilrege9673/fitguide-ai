@@ -50,7 +50,7 @@ async def download_progress_pdf(
             timeframe=timeframe
         )
 
-        filename = f"feedguide-performance-report-{timeframe}.pdf"
+        filename = f"fitguide-performance-report-{timeframe}.pdf"
         return StreamingResponse(
             io.BytesIO(pdf_bytes),
             media_type="application/pdf",

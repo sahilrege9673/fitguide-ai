@@ -1,5 +1,5 @@
 -- ==============================================================================
--- FeedGuide AI — Migration 001: Initial Schema
+-- FitGuide AI — Migration 001: Initial Schema
 -- ==============================================================================
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

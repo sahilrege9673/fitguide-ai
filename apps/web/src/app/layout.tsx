@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'FeedGuide AI — Engineered Fitness Companion',
+  title: 'FitGuide AI — Engineered Fitness Companion',
   description: 'Grounded fitness planning, structured periodization, and clinical safety guardrails.',
 };
 

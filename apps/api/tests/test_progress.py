@@ -143,7 +143,7 @@ def test_progress_pdf_generation(client, user_a_token):
     assert pdf_res.status_code == 200
     assert pdf_res.headers["content-type"] == "application/pdf"
     assert "attachment; filename=" in pdf_res.headers["content-disposition"]
-    assert "feedguide-performance-report-30d.pdf" in pdf_res.headers["content-disposition"]
+    assert "fitguide-performance-report-30d.pdf" in pdf_res.headers["content-disposition"]
 
     pdf_bytes = pdf_res.content
     assert len(pdf_bytes) > 2000

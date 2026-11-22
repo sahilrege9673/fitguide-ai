@@ -67,7 +67,7 @@ export function AppShell({ children }: AppShellProps) {
           <div className="h-16 flex items-center gap-2.5 px-6 border-b border-forest">
             <span className="h-2.5 w-2.5 bg-lime rounded-none" />
             <Link href="/dashboard" className="font-display text-lg font-bold tracking-tight text-chalk">
-              FEEDGUIDE<span className="text-lime">.AI</span>
+              FITGUIDE<span className="text-lime">.AI</span>
             </Link>
             <span className="text-[10px] font-mono uppercase tracking-widest text-sand border border-forest px-1 py-0.2 ml-auto">
               CORE
@@ -128,7 +128,7 @@ export function AppShell({ children }: AppShellProps) {
         <Link href="/dashboard" className="flex items-center gap-2">
           <span className="h-2.5 w-2.5 bg-lime" />
           <span className="font-display text-base font-bold tracking-tight text-chalk">
-            FEEDGUIDE<span className="text-lime">.AI</span>
+            FITGUIDE<span className="text-lime">.AI</span>
           </span>
         </Link>
         <button

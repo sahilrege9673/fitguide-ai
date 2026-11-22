@@ -1,5 +1,5 @@
 """
-FeedGuide AI — Authoritative Exercise Reference Catalog (>= 80 Verified Exercises)
+FitGuide AI — Authoritative Exercise Reference Catalog (>= 80 Verified Exercises)
 Includes biomechanical execution instructions, contraindications, age suitability, and media licensing attribution.
 """
 

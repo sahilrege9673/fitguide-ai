@@ -6,17 +6,17 @@ import httpx
 from pydantic import BaseModel, ValidationError
 
 from app.core.config import settings
-from app.services.system_prompts import FEEDGUIDE_SYSTEM_PROMPT, WORKOUT_RECOMMENDATION_SYSTEM_PROMPT
+from app.services.system_prompts import FITGUIDE_SYSTEM_PROMPT, WORKOUT_RECOMMENDATION_SYSTEM_PROMPT
 from app.schemas.chat import AIWorkoutRecommendation, StructuredExerciseRef
 from app.services.exercise_service import ExerciseService
 
 logger = logging.getLogger(__name__)
 
 class BaseLLMProvider:
-    async def generate_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
+    async def generate_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
         raise NotImplementedError
 
-    async def stream_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
+    async def stream_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
         raise NotImplementedError
 
     async def generate_structured(self, prompt: str, schema_cls: Type[BaseModel] = AIWorkoutRecommendation, system_instruction: str = WORKOUT_RECOMMENDATION_SYSTEM_PROMPT) -> BaseModel:
@@ -28,7 +28,7 @@ class MockLLMProvider(BaseLLMProvider):
     Deterministic athletic coach provider for testing, offline use,
     and automatic fallback when external APIs are unreachable.
     """
-    async def generate_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
+    async def generate_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
         lower = prompt.lower()
         if "knee" in lower or "squat" in lower:
             return (
@@ -46,7 +46,7 @@ class MockLLMProvider(BaseLLMProvider):
                 "- **Zone 1 Aerobic Flush**: 15–20 minutes of easy cycling or brisk walking to stimulate blood flow without autonomic fatigue.\n"
                 "- **Thoracic & Hip Mobility**: 90/90 hip switches, cat-cow stretches, and world's greatest stretch (2 sets of 8 reps per side).\n"
                 "- **Hydration & Electrolytes**: Ensure sodium, potassium, and magnesium replenishment alongside 2.5–3L of water.\n\n"
-                "*Disclaimer*: FeedGuide guidance is athletic in nature; if recovery issues are tied to injury, seek medical evaluation."
+                "*Disclaimer*: FitGuide guidance is athletic in nature; if recovery issues are tied to injury, seek medical evaluation."
             )
         else:
             return (
@@ -58,7 +58,7 @@ class MockLLMProvider(BaseLLMProvider):
                 "Stay disciplined, maintain consistent sleep hygiene, and log your completed sets."
             )
 
-    async def stream_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
+    async def stream_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
         full_text = await self.generate_text(prompt, system_instruction)
         # Yield words with small spaces to simulate realistic streaming
         tokens = full_text.split(" ")
@@ -104,7 +104,7 @@ class GeminiProvider(BaseLLMProvider):
         self.model = model
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 
-    async def generate_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
+    async def generate_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
         url = f"{self.base_url}/{self.model}:generateContent?key={self.api_key}"
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
@@ -125,7 +125,7 @@ class GeminiProvider(BaseLLMProvider):
                 return "".join([p.get("text", "") for p in parts])
             return ""
 
-    async def stream_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
+    async def stream_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
         url = f"{self.base_url}/{self.model}:streamGenerateContent?alt=sse&key={self.api_key}"
         
         # Build contents including historical turns if provided
@@ -200,14 +200,14 @@ class LLMService:
         else:
             self.provider = MockLLMProvider()
 
-    async def generate_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
+    async def generate_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, temperature: float = 0.7) -> str:
         try:
             return await self.provider.generate_text(prompt, system_instruction, temperature)
         except Exception as e:
             logger.error(f"Primary LLM error ({e}), falling back to Mock provider.")
             return await MockLLMProvider().generate_text(prompt, system_instruction, temperature)
 
-    async def stream_text(self, prompt: str, system_instruction: str = FEEDGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
+    async def stream_text(self, prompt: str, system_instruction: str = FITGUIDE_SYSTEM_PROMPT, history: Optional[List[Dict[str, str]]] = None) -> AsyncIterator[str]:
         try:
             async for chunk in self.provider.stream_text(prompt, system_instruction, history):
                 yield chunk

@@ -13,10 +13,10 @@ class ExerciseService:
 
         exercises = []
         for raw in EXERCISES_DATA:
-            ex_id = uuid5(NAMESPACE_DNS, f"feedguide.exercise.{raw['slug']}")
+            ex_id = uuid5(NAMESPACE_DNS, f"fitguide.exercise.{raw['slug']}")
             media_items = []
             for idx, m in enumerate(raw.get("media", [])):
-                m_id = uuid5(NAMESPACE_DNS, f"feedguide.media.{raw['slug']}.{idx}")
+                m_id = uuid5(NAMESPACE_DNS, f"fitguide.media.{raw['slug']}.{idx}")
                 media_items.append(ExerciseMediaResponse(
                     id=m_id,
                     media_type=m["media_type"],

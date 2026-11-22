@@ -12,7 +12,7 @@ from app.core.safety_rules import SafetyEngine, SafetySeverity
 from app.services.profile_service import ProfileService
 from app.services.context_builder import ContextBuilder
 from app.services.system_prompts import (
-    FEEDGUIDE_SYSTEM_PROMPT,
+    FITGUIDE_SYSTEM_PROMPT,
     WORKOUT_RECOMMENDATION_SYSTEM_PROMPT,
     build_user_context_block
 )
@@ -152,7 +152,7 @@ class ChatService:
                 f"### SAFETY INTERVENTION: {safety_eval.triggered_rule.upper().replace('_', ' ')}\n\n"
                 f"{safety_eval.user_message}\n\n"
                 f"**Clinical Directive**: {safety_eval.suggested_action or 'Please stop physical exertion and seek advice from a licensed medical professional.'}\n\n"
-                "*FeedGuide AI prioritizes athlete safety above all training objectives.*"
+                "*FitGuide AI prioritizes athlete safety above all training objectives.*"
             )
 
             # Stream advisory tokens
@@ -223,7 +223,7 @@ class ChatService:
             rag_prompt_addition, citations = rag_service.format_grounded_context(retrieved_results)
             yield f"event: citations\ndata: {json.dumps({'citations': citations})}\n\n"
 
-        augmented_system_prompt = f"{FEEDGUIDE_SYSTEM_PROMPT}\n\n{secured_context}"
+        augmented_system_prompt = f"{FITGUIDE_SYSTEM_PROMPT}\n\n{secured_context}"
         if rag_prompt_addition:
             augmented_system_prompt += f"\n\n{rag_prompt_addition}"
 

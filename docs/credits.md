@@ -1,6 +1,6 @@
 # Media & Content Attribution Ledger
 
-FeedGuide AI strictly enforces authentic visual media standards and respects intellectual property rights. All photographic and instructional media used within the application are sourced from licensed or permissive open-access platforms (Unsplash License, Pexels License, Creative Commons, Wikimedia Commons).
+FitGuide AI strictly enforces authentic visual media standards and respects intellectual property rights. All photographic and instructional media used within the application are sourced from licensed or permissive open-access platforms (Unsplash License, Pexels License, Creative Commons, Wikimedia Commons).
 
 ---
 

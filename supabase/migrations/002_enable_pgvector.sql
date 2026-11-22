@@ -1,5 +1,5 @@
 -- ==============================================================================
--- FeedGuide AI — Migration 002: pgvector & Knowledge Base
+-- FitGuide AI — Migration 002: pgvector & Knowledge Base
 -- ==============================================================================
 
 CREATE EXTENSION IF NOT EXISTS "vector";

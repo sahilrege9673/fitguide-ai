@@ -1,6 +1,6 @@
-# FeedGuide AI — Production Deployment Guide & Runbook
+# FitGuide AI — Production Deployment Guide & Runbook
 
-This guide provides end-to-end instructions for deploying FeedGuide AI to production using **Vercel** (Next.js 14 Frontend), **Render or Railway** (FastAPI Backend), and **Supabase** (Managed PostgreSQL + pgvector + Auth).
+This guide provides end-to-end instructions for deploying FitGuide AI to production using **Vercel** (Next.js 14 Frontend), **Render or Railway** (FastAPI Backend), and **Supabase** (Managed PostgreSQL + pgvector + Auth).
 
 ---
 
@@ -16,7 +16,7 @@ This guide provides end-to-end instructions for deploying FeedGuide AI to produc
 ┌─────────────────────────────────┐        HTTPS / Bearer        ┌──────────────────────────────────┐
 │      Next.js 14 Frontend        │ ───────────────────────────> │     FastAPI Python Backend       │
 │     (Hosted on Vercel)          │                              │     (Hosted on Render/Railway)   │
-│   https://feedguide.vercel.app  │                              │   https://api.feedguide.ai       │
+│   https://fitguide.vercel.app  │                              │   https://api.fitguide.ai       │
 └───────────────┬─────────────────┘                              └───────────────┬──────────────────┘
                 │                                                                │
                 │ Supabase Auth (OAuth & JWT)                     Service Role   │  pgvector / RLS
@@ -34,7 +34,7 @@ This guide provides end-to-end instructions for deploying FeedGuide AI to produc
 
 ## Prerequisites
 
-1. **GitHub Account**: Containing the committed FeedGuide AI repository.
+1. **GitHub Account**: Containing the committed FitGuide AI repository.
 2. **Supabase Account**: A live Supabase project ([supabase.com](https://supabase.com)).
 3. **Vercel Account**: Free or Pro tier ([vercel.com](https://vercel.com)).
 4. **Render or Railway Account**: Free or Starter tier ([render.com](https://render.com) or [railway.app](https://railway.app)).
@@ -66,14 +66,14 @@ If not already executed during local development:
 
 1. Connect your GitHub repository to **Render**.
 2. Create a new **Blueprint Instance** and point it to `render.yaml`.
-3. Render will automatically detect the Python 3.12 environment and provision the `feedguide-api` web service.
+3. Render will automatically detect the Python 3.12 environment and provision the `fitguide-api` web service.
 
 ### Option B: Manual Web Service Setup on Render
 
 1. On the Render Dashboard, click **New + ➔ Web Service**.
 2. Select your GitHub repository.
 3. Configure the service settings:
-   - **Name**: `feedguide-api`
+   - **Name**: `fitguide-api`
    - **Region**: Closest to your users (e.g., Oregon, Frankfurt, Singapore)
    - **Branch**: `master`
    - **Root Directory**: `apps/api`
@@ -96,7 +96,7 @@ If not already executed during local development:
    | `CORS_ORIGINS` | `https://<your-frontend>.vercel.app,http://localhost:3000` | Allowed frontend origins (comma-separated) |
    | `CHAT_RATE_LIMIT_PER_MINUTE` | `15` | AI Rate Limiter threshold |
 
-5. Click **Create Web Service**. Wait for the build to finish. Once live, note your backend URL (e.g. `https://feedguide-api.onrender.com`).
+5. Click **Create Web Service**. Wait for the build to finish. Once live, note your backend URL (e.g. `https://fitguide-api.onrender.com`).
 
 ---
 
@@ -116,11 +116,11 @@ If not already executed during local development:
    | :--- | :--- | :--- |
    | `NEXT_PUBLIC_SUPABASE_URL` | `https://<your-id>.supabase.co` | Supabase endpoint URL |
    | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJ...` | Supabase public anon key |
-   | `NEXT_PUBLIC_API_BASE_URL` | `https://feedguide-api.onrender.com/api/v1` | URL of your deployed Render backend |
+   | `NEXT_PUBLIC_API_BASE_URL` | `https://fitguide-api.onrender.com/api/v1` | URL of your deployed Render backend |
    | `NEXT_PUBLIC_APP_URL` | `https://<your-project>.vercel.app` | Your production Vercel domain |
 
 5. Click **Deploy**. Vercel will build all 16 static and dynamic routes.
-6. Once deployed, note your production frontend URL (e.g., `https://feedguide-ai.vercel.app`).
+6. Once deployed, note your production frontend URL (e.g., `https://fitguide-ai.vercel.app`).
 
 ---
 
@@ -154,15 +154,15 @@ To ensure OAuth logins (Google) and email confirmations redirect back to your li
 Run the automated smoke test script locally against your live production endpoints to verify end-to-end system health:
 
 ```bash
-python scripts/smoke_test.py --api-url https://feedguide-api.onrender.com --web-url https://feedguide-ai.vercel.app
+python scripts/smoke_test.py --api-url https://fitguide-api.onrender.com --web-url https://fitguide-ai.vercel.app
 ```
 
 ### Expected Output:
 ```
 ======================================================================
-FEEDGUIDE AI — PRODUCTION SMOKE TEST SUITE
-Target API Endpoint: https://feedguide-api.onrender.com
-Target Web Endpoint: https://feedguide-ai.vercel.app
+FITGUIDE AI — PRODUCTION SMOKE TEST SUITE
+Target API Endpoint: https://fitguide-api.onrender.com
+Target Web Endpoint: https://fitguide-ai.vercel.app
 ======================================================================
   [PASS] API Health Probe (185.2ms) -> HTTP 200
   [PASS] API Root Index (112.4ms) -> HTTP 200

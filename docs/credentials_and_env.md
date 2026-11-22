@@ -43,7 +43,7 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ENV="development"
 PORT=8000
 HOST="0.0.0.0"
-CORS_ORIGINS="http://localhost:3000,https://feedguide.vercel.app"
+CORS_ORIGINS="http://localhost:3000,https://fitguide.vercel.app"
 
 # Supabase Database & Auth Configuration
 SUPABASE_URL="https://your-project-ref.supabase.co"
@@ -72,7 +72,7 @@ APP_SECRET_KEY="generate-a-secure-random-32-character-secret"
 ## 4. Supabase Project Setup Checklist
 
 1. **Create Supabase Project**:
-   - Go to [Supabase](https://supabase.com) and create a new project named `feedguide-ai`.
+   - Go to [Supabase](https://supabase.com) and create a new project named `fitguide-ai`.
    - Save the Database Password securely.
 2. **Enable Vector Extension**:
    - Navigate to `Database -> Extensions` and verify `vector` is enabled.
