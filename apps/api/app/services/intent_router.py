@@ -5,9 +5,14 @@ import joblib
 
 logger = logging.getLogger(__name__)
 
-ARTIFACT_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "ml", "artifacts", "baseline_classifier.joblib")
-)
+CANDIDATE_PATHS = [
+    os.environ.get("ML_ARTIFACT_PATH"),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "ml", "artifacts", "baseline_classifier.joblib")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml_artifacts", "baseline_classifier.joblib")),
+    os.path.abspath("/app/app/ml_artifacts/baseline_classifier.joblib"),
+    os.path.abspath("/app/ml/artifacts/baseline_classifier.joblib"),
+]
+ARTIFACT_PATH = next((p for p in CANDIDATE_PATHS if p and os.path.exists(p)), CANDIDATE_PATHS[1])
 
 ROUTING_TARGETS = {
     "safety_sensitive": "safety_intervene",

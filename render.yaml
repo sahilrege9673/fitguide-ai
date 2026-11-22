@@ -1,0 +1,32 @@
+services:
+  # ----------------------------------------------------
+  # FeedGuide AI — Production FastAPI Backend Web Service
+  # ----------------------------------------------------
+  - type: web
+    name: feedguide-api
+    runtime: python
+    rootDir: apps/api
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT --workers 2 --proxy-headers --forwarded-allow-ips='*'
+    healthCheckPath: /api/v1/health
+    plan: starter
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        value: "https://feedguide.vercel.app,https://feedguide-ai.vercel.app,http://localhost:3000"
+      - key: CHAT_RATE_LIMIT_PER_MINUTE
+        value: "15"
