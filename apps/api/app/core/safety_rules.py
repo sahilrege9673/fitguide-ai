@@ -24,17 +24,17 @@ class SafetyEngine:
 
     RED_FLAG_PATTERNS = [
         (
-            r"\b(chest pain|tightness in chest|angina|heart flutter|crushing chest)\b",
+            r"\b(chest pain|tightness in chest|chest tightness|angina|heart flutter|crushing chest|radiating pain)\b",
             "cardiac_warning",
             "Chest pain or tightness requires immediate clinical medical attention. Stop all physical activity and contact emergency medical services or a physician."
         ),
         (
-            r"\b(dizzy|faint|lightheaded|blackout|syncope|loss of consciousness)\b",
+            r"\b(dizzy|dizziness|faint|fainted|fainting|lightheaded|lightheadedness|blackout|blacked out|blacking out|syncope|loss of consciousness)\b",
             "syncope_warning",
             "Dizziness or lightheadedness can indicate acute cardiovascular, neurological, or metabolic strain. Stop exercise, sit down safely, hydrate, and seek medical evaluation."
         ),
         (
-            r"\b(sharp pain|tore my|torn|snapped|dislocated|swollen joint|popped knee)\b",
+            r"\b(sharp pain|tore my|torn|snapped|dislocated|swollen joint|popped knee|sprained|fractured|broken bone)\b",
             "acute_injury",
             "Acute or sharp pain indicates potential ligament, tendon, or structural injury. Do not train through sharp pain. Rest the joint and consult a licensed physiotherapist or physician."
         ),
@@ -62,7 +62,7 @@ class SafetyEngine:
             "For athletes under 18, our training strictly prioritizes movement quality, motor mechanics, and injury prevention over maximum-effort 1RM loading."
         ),
         (
-            r"\b(cut weight|calorie deficit|diet pill|fat burner|shred fast|weight cut)\b",
+            r"\b(cut weight|cutting weight|calorie deficit|calories to|caloric deficit|diet pill|fat burner|shred fast|weight cut|lose weight fast)\b",
             "minor_caloric_restriction",
             "Nutritional guidance for young athletes focuses exclusively on fueling athletic development, energy balance, and growth. Calorie restriction is strictly prohibited."
         )
@@ -70,7 +70,7 @@ class SafetyEngine:
 
     OLDER_ADULT_RESTRICTIONS = [
         (
-            r"\b(box jump|depth jump|high impact plyo|max sprint intervals)\b",
+            r"\b(box jump|depth jump|high impact plyo|high impact|max sprint intervals)\b",
             "senior_high_impact_warning",
             "For older adults, low-impact joint-friendly alternatives, balance drills, and controlled tempo movements are prioritized to protect cartilage and enhance stability."
         )
