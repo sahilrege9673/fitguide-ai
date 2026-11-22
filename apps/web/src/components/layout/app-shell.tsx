@@ -24,13 +24,20 @@ interface AppShellProps {
   children: React.ReactNode;
 }
 
-const NAV_ITEMS = [
+interface NavItem {
+  name: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Workouts', href: '/workouts', icon: Dumbbell },
   { name: 'Schedule', href: '/schedule', icon: Calendar },
   { name: 'Exercise Library', href: '/exercises', icon: BookOpen },
   { name: 'AI Assistant', href: '/assistant', icon: MessageSquare },
-  { name: 'Progress', href: '/progress', icon: TrendingUp, badge: 'Phase 6' },
+  { name: 'Progress', href: '/progress', icon: TrendingUp },
   { name: 'Profile', href: '/profile', icon: User },
 ];
 

@@ -35,6 +35,21 @@ class ProfileService:
         )
 
     @staticmethod
+    def get_profile(user_id: UUID) -> Optional[UserProfileResponse]:
+        if user_id not in _PROFILES_STORE:
+            return None
+        prof = _PROFILES_STORE[user_id]
+        has_completed = user_id in _PREFERENCES_STORE and _PREFERENCES_STORE[user_id].get("completed_at") is not None
+        return UserProfileResponse(
+            id=prof["id"],
+            email=prof["email"],
+            full_name=prof["full_name"],
+            role=prof["role"],
+            has_completed_onboarding=has_completed,
+            created_at=prof["created_at"]
+        )
+
+    @staticmethod
     def get_preferences(user_id: UUID) -> Optional[OnboardingPreferencesResponse]:
         if user_id not in _PREFERENCES_STORE:
             return None

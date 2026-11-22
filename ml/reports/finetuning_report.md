@@ -16,8 +16,8 @@ Both models were evaluated on an identical held-out test split of **180 examples
 | **Macro Precision** | **100.00%** | **100.00%** | +0.00% |
 | **Macro Recall** | **100.00%** | **100.00%** | +0.00% |
 | **Macro F1-Score** | **100.00%** | **100.00%** | +0.00% |
-| **p50 Latency** | 0.80 ms | 14.98 ms | +14.18 ms |
-| **p95 Latency** | **2.39 ms** | **31.43 ms** | +29.04 ms |
+| **p50 Latency** | 0.72 ms | 8.72 ms | +7.99 ms |
+| **p95 Latency** | **2.42 ms** | **14.51 ms** | +12.09 ms |
 | **Model Size** | ~110 KB | ~2.6 MB | +2.5 MB |
 
 ---
@@ -55,9 +55,9 @@ Both models were evaluated on an identical held-out test split of **180 examples
 1. **Accuracy / F1 Gain**: Acceptance gate required a `>= 3% Macro-F1 improvement` over baseline to justify neural model deployment overhead.
    - *Outcome*: Both Baseline and LoRA models achieved **100.0% Macro-F1** on the held-out test set due to well-separated domain vocabularies and slot distributions.
 2. **Inference Latency**:
-   - Baseline p95 latency: **2.39 ms**
-   - LoRA p95 latency: **31.43 ms**
-   - *Outcome*: The TF-IDF baseline is **13.1x faster** while achieving identical perfect accuracy.
+   - Baseline p95 latency: **2.42 ms**
+   - LoRA p95 latency: **14.51 ms**
+   - *Outcome*: The TF-IDF baseline is **6.0x faster** while achieving identical perfect accuracy.
 3. **Operational Overhead**:
    - The TF-IDF baseline has no heavy PyTorch runtime dependency in production request workers and consumes negligible CPU memory (< 100 KB vs 2.6 MB).
 
