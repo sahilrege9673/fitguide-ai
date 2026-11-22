@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
+import { getApiBaseUrl } from '@/lib/api/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -113,7 +114,7 @@ export default function AssistantPage() {
       const token = await getAuthToken();
       if (!token) return;
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api/v1'}/chat/conversations`, {
+      const res = await fetch(`${getApiBaseUrl()}/chat/conversations`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -125,6 +126,9 @@ export default function AssistantPage() {
           // Auto create a starting conversation
           createNewConversation();
         }
+      } else {
+        const errBody = await res.json().catch(() => null);
+        throw new Error(errBody?.detail || `Failed to load conversation history (${res.status})`);
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to load conversation history.');
@@ -133,13 +137,13 @@ export default function AssistantPage() {
     }
   };
 
-  const createNewConversation = async () => {
+  const createNewConversation = async (): Promise<string | null> => {
     setErrorMsg(null);
     try {
       const token = await getAuthToken();
-      if (!token) return;
+      if (!token) return null;
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api/v1'}/chat/conversations`, {
+      const res = await fetch(`${getApiBaseUrl()}/chat/conversations`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,12 +154,17 @@ export default function AssistantPage() {
 
       if (res.ok) {
         const newConv: Conversation = await res.json();
-        setConversations(prev => [newConv, ...prev]);
+        setConversations(prev => [newConv, ...prev.filter(c => c.id !== newConv.id)]);
         setActiveConvId(newConv.id);
         setMessages([]);
+        return newConv.id;
+      } else {
+        const errBody = await res.json().catch(() => null);
+        throw new Error(errBody?.detail || `Failed to initiate consultation (${res.status})`);
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to initiate conversation.');
+      return null;
     }
   };
 
@@ -167,7 +176,7 @@ export default function AssistantPage() {
       const token = await getAuthToken();
       if (!token) return;
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api/v1'}/chat/conversations/${convId}/messages`, {
+      const res = await fetch(`${getApiBaseUrl()}/chat/conversations/${convId}/messages`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -180,6 +189,9 @@ export default function AssistantPage() {
           isSafetyStop: m.content.includes('SAFETY INTERVENTION'),
           created_at: m.created_at
         })));
+      } else {
+        const errBody = await res.json().catch(() => null);
+        throw new Error(errBody?.detail || `Failed to retrieve messages (${res.status})`);
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to retrieve messages.');
@@ -190,10 +202,19 @@ export default function AssistantPage() {
 
   const handleSendMessage = async (textToSend?: string) => {
     const prompt = (textToSend || inputPrompt).trim();
-    if (!prompt || isStreaming || !activeConvId) return;
+    if (!prompt || isStreaming) return;
 
     setInputPrompt('');
     setErrorMsg(null);
+
+    let targetConvId = activeConvId;
+    if (!targetConvId) {
+      targetConvId = await createNewConversation();
+      if (!targetConvId) {
+        setErrorMsg('Unable to initialize a consultation thread. Please try again.');
+        return;
+      }
+    }
 
     // Append user message immediately
     const userMessage: ChatMessage = {
@@ -221,7 +242,7 @@ export default function AssistantPage() {
 
     try {
       const token = await getAuthToken();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api/v1'}/chat/conversations/${activeConvId}/messages`, {
+      const res = await fetch(`${getApiBaseUrl()}/chat/conversations/${targetConvId}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

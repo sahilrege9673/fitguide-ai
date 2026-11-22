@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert } from '@/components/ui/alert';
-import { apiClient, ApiError } from '@/lib/api/client';
+import { apiClient, ApiError, getApiBaseUrl } from '@/lib/api/client';
 import { createClient } from '@/lib/supabase/client';
 import {
   TrendingUp,
@@ -102,7 +102,7 @@ export default function ProgressPage() {
     try {
       const supabase = createClient();
       const { data: { session } } = await supabase.auth.getSession();
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api/v1';
+      const apiBase = getApiBaseUrl();
       const url = `${apiBase}/progress/report/pdf?timeframe=${timeframe}`;
 
       const res = await fetch(url, {

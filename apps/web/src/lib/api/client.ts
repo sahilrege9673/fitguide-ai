@@ -1,7 +1,31 @@
 import { createClient } from '@/lib/supabase/client';
 
-const rawBase = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-const API_BASE_URL = rawBase.endsWith('/api/v1') ? rawBase : `${rawBase.replace(/\/$/, '')}/api/v1`;
+export function getApiBaseUrl(): string {
+  // If explicitly configured in environment variables
+  const configured = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.NEXT_PUBLIC_API_URL;
+  if (configured && configured.trim()) {
+    const trimmed = configured.trim().replace(/\/+$/, '');
+    return trimmed.endsWith('/api/v1') ? trimmed : `${trimmed}/api/v1`;
+  }
+
+  // Browser-side fallback for production domains (e.g. Vercel)
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host !== 'localhost' && host !== '127.0.0.1') {
+      return 'https://fitguide-ai.onrender.com/api/v1';
+    }
+  }
+
+  // Server-side fallback for production builds
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://fitguide-ai.onrender.com/api/v1';
+  }
+
+  // Local development fallback
+  return 'http://localhost:8000/api/v1';
+}
+
+export const API_BASE_URL = getApiBaseUrl();
 
 export class ApiError extends Error {
   code: string;
@@ -31,7 +55,8 @@ export async function apiClient<T>(
     headers['Authorization'] = `Bearer ${session.access_token}`;
   }
 
-  const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
 
   try {
     const res = await fetch(url, {
