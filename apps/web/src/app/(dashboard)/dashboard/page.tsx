@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { apiClient, ApiError } from '@/lib/api/client';
+import { createClient } from '@/lib/supabase/client';
 import { 
   Play, 
   Sparkles, 
@@ -76,6 +77,13 @@ export default function DashboardPage() {
     setIsLoading(true);
     setErrorMsg(null);
     try {
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/login');
+        return;
+      }
+
       const prof = await apiClient<ProfileData>('/auth/me');
       setProfile(prof);
 
