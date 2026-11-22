@@ -1,0 +1,17 @@
+{
+  "classes": [
+    "workout_request",
+    "exercise_technique",
+    "schedule_adjustment",
+    "progress_inquiry",
+    "safety_sensitive",
+    "out_of_scope"
+  ],
+  "vocab_size": 511,
+  "rank": 16,
+  "alpha": 32.0,
+  "embed_dim": 128,
+  "hidden_dim": 256,
+  "best_val_acc": 1.0,
+  "training_time_secs": 77.18
+}

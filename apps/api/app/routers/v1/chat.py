@@ -109,3 +109,15 @@ async def get_ai_workout_recommendation(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Workout recommendation failed: {str(e)}"
         )
+
+@router.post("/classify")
+def classify_user_intent(
+    payload: MessageCreate,
+    current_user: CurrentUser = Depends(get_current_user)
+):
+    """
+    Classifies user query intent using the high-performance ML routing model.
+    Returns predicted intent, confidence score, and downstream routing target.
+    """
+    from app.services.intent_router import intent_router
+    return intent_router.classify_intent(payload.content)

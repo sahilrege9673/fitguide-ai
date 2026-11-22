@@ -1,0 +1,180 @@
+{"text": "Hey, how do I configure a reverse proxy using Caddy?", "label": "out_of_scope"}
+{"text": "Please did I complete more workout volume this week than the last 30 days?", "label": "progress_inquiry"}
+{"text": "Please i am too busy today, move my glutes session to next Monday.", "label": "schedule_adjustment"}
+{"text": "What is the capital city of France?", "label": "out_of_scope"}
+{"text": "I have severe acute swelling in my shoulder, should I push through?", "label": "safety_sensitive"}
+{"text": "i feel short of breath, chest tightness, and nausea during romanian deadlifts.", "label": "safety_sensitive"}
+{"text": "Hey, how has my consistency percentage changed over the last last week?", "label": "progress_inquiry"}
+{"text": "Can you generate a 75-minute maximum strength session with cable machine?", "label": "workout_request"}
+{"text": "i have severe acute swelling in my elbow, should i push through?", "label": "safety_sensitive"}
+{"text": "should i breathe in or out during the concentric phase of romanian deadlifts?", "label": "exercise_technique"}
+{"text": "did i complete more workout volume this week than last week?", "label": "progress_inquiry"}
+{"text": "What is the distance between the Earth and the Mars?", "label": "out_of_scope"}
+{"text": "What exercises should I do today for arms hypertrophy with resistance bands?", "label": "workout_request"}
+{"text": "what is the distance between the earth and the moon?", "label": "out_of_scope"}
+{"text": "Hey, what is my personal record or estimated max on lunges?", "label": "progress_inquiry"}
+{"text": "Please i feel short of breath, chest tightness, and nausea during barbell rows.", "label": "safety_sensitive"}
+{"text": "What is the distance between the Earth and the Jupiter?", "label": "out_of_scope"}
+{"text": "How can I engage my arms more effectively during lunges?", "label": "exercise_technique"}
+{"text": "Generate a report of all sets and reps logged this month.", "label": "progress_inquiry"}
+{"text": "Can I swap Thursday and Saturday workouts this week?", "label": "schedule_adjustment"}
+{"text": "Please generate a report of all sets and reps logged this week.", "label": "progress_inquiry"}
+{"text": "what common mistakes should i avoid when performing overhead press?", "label": "exercise_technique"}
+{"text": "Please summarize my completed workouts and adherence percentage for last week.", "label": "progress_inquiry"}
+{"text": "should i breathe in or out during the concentric phase of pull-ups?", "label": "exercise_technique"}
+{"text": "give me a advanced push day routine using cable machine.", "label": "workout_request"}
+{"text": "can you generate a 75-minute conditioning session with resistance bands?", "label": "workout_request"}
+{"text": "Please reschedule today's session to Sunday due to family obligations.", "label": "schedule_adjustment"}
+{"text": "Please update my schedule so I only train on weekends only.", "label": "schedule_adjustment"}
+{"text": "Hey, how can I engage my glutes more effectively during pull-ups?", "label": "exercise_technique"}
+{"text": "Reschedule today's session to tomorrow due to fatigue.", "label": "schedule_adjustment"}
+{"text": "i missed yesterday's workout, how should i adjust my weekly schedule?", "label": "schedule_adjustment"}
+{"text": "I heard a loud pop in my elbow and now it is swollen and stiff.", "label": "safety_sensitive"}
+{"text": "i need to shift my rest day from tuesday to next monday.", "label": "schedule_adjustment"}
+{"text": "Did I complete more workout volume this week than the last 30 days?", "label": "progress_inquiry"}
+{"text": "What is the distance between the Earth and the Sun?", "label": "out_of_scope"}
+{"text": "Reschedule today's session to Wednesday evening due to a business trip.", "label": "schedule_adjustment"}
+{"text": "Summarize my completed workouts and adherence percentage for the last 30 days.", "label": "progress_inquiry"}
+{"text": "Hey, have I hit my weekly workout goal for the last 30 days?", "label": "progress_inquiry"}
+{"text": "Hey, can I swap Tuesday and Wednesday evening workouts this week?", "label": "schedule_adjustment"}
+{"text": "change my training calendar to a push/pull/legs split instead.", "label": "schedule_adjustment"}
+{"text": "Who was the prime minister of Canada in 2008?", "label": "out_of_scope"}
+{"text": "analyze my training frequency and rest day balance over this month.", "label": "progress_inquiry"}
+{"text": "Hey, can you write a poem about solitude?", "label": "out_of_scope"}
+{"text": "Can I reschedule my Saturday workout to Sunday?", "label": "schedule_adjustment"}
+{"text": "Please what is the current stock price of Tesla?", "label": "out_of_scope"}
+{"text": "How should I structure my shoulders workout using kettlebells?", "label": "workout_request"}
+{"text": "Hey, i heard a loud pop in my hip and now it is swollen and stiff.", "label": "safety_sensitive"}
+{"text": "Design a 45-minute training block prioritizing quads.", "label": "workout_request"}
+{"text": "who was the prime minister of japan in 2008?", "label": "out_of_scope"}
+{"text": "I blacked out for a few seconds right after my heavy set.", "label": "safety_sensitive"}
+{"text": "Hey, how much has my arms volume increased over the last the last 30 days?", "label": "progress_inquiry"}
+{"text": "what exercises should i do today for core hypertrophy with cable machine?", "label": "workout_request"}
+{"text": "What is the proper foot placement for pull-ups?", "label": "exercise_technique"}
+{"text": "Hey, my hip is throbbing and completely seized up after barbell back squats.", "label": "safety_sensitive"}
+{"text": "Give me a 15-minute arms workout using barbell.", "label": "workout_request"}
+{"text": "Please i got very dizzy, lightheaded and almost passed out during lunges.", "label": "safety_sensitive"}
+{"text": "Please can you help me solve this calculus equation regarding derivatives?", "label": "out_of_scope"}
+{"text": "can you explain the rules of the board game settlers of catan?", "label": "out_of_scope"}
+{"text": "Hey, what is the current stock price of Tesla?", "label": "out_of_scope"}
+{"text": "I heard a loud pop in my wrist and now it is swollen and stiff.", "label": "safety_sensitive"}
+{"text": "how should i structure my glutes workout using bodyweight only?", "label": "workout_request"}
+{"text": "Please who directed the science fiction movie Interstellar?", "label": "out_of_scope"}
+{"text": "I need a workout plan focusing on core for conditioning.", "label": "workout_request"}
+{"text": "Hey, update my schedule so I only train on weekdays only.", "label": "schedule_adjustment"}
+{"text": "i am too busy today, move my glutes session to wednesday evening.", "label": "schedule_adjustment"}
+{"text": "Design a 20-minute training block prioritizing shoulders.", "label": "workout_request"}
+{"text": "What is the difference between barbell rows and goblet squats?", "label": "exercise_technique"}
+{"text": "How should I structure my full body workout using resistance bands?", "label": "workout_request"}
+{"text": "What is the difference between bench press and lat pulldowns?", "label": "exercise_technique"}
+{"text": "Hey, adjust my calendar for an extra rest day because of muscle soreness.", "label": "schedule_adjustment"}
+{"text": "How deep should I descend during Romanian deadlifts for maximum chest engagement?", "label": "exercise_technique"}
+{"text": "shift my scheduled training to saturday morning.", "label": "schedule_adjustment"}
+{"text": "Hey, create a barbell-only workout for back focusing on athletic endurance.", "label": "workout_request"}
+{"text": "Give me a 60-minute full body workout using dumbbells.", "label": "workout_request"}
+{"text": "Please write a Python script to calculate Fibonacci numbers.", "label": "out_of_scope"}
+{"text": "Design a 15-minute training block prioritizing glutes.", "label": "workout_request"}
+{"text": "How do I fix a leaking refrigerator in my house?", "label": "out_of_scope"}
+{"text": "Hey, i am coughing up blood and feeling chest pressure during cardio.", "label": "safety_sensitive"}
+{"text": "my lower back is throbbing and completely seized up after barbell rows.", "label": "safety_sensitive"}
+{"text": "Can you generate a 15-minute maximum strength session with dumbbells?", "label": "workout_request"}
+{"text": "Hey, who directed the science fiction movie The Matrix?", "label": "out_of_scope"}
+{"text": "What is the optimal bar path or movement trajectory for barbell back squats?", "label": "exercise_technique"}
+{"text": "Hey, can we push back my workout by one day?", "label": "schedule_adjustment"}
+{"text": "Hey, change my training calendar to a 4-day athletic split instead.", "label": "schedule_adjustment"}
+{"text": "Can you give me biomechanical cues for strict bench press?", "label": "exercise_technique"}
+{"text": "Suggest a quick 30-minute routine for chest.", "label": "workout_request"}
+{"text": "Where should my elbows be positioned during pull-ups?", "label": "exercise_technique"}
+{"text": "Please i am coughing up blood and feeling chest pressure during cardio.", "label": "safety_sensitive"}
+{"text": "Summarize my completed workouts and adherence percentage for this month.", "label": "progress_inquiry"}
+{"text": "Can you generate a 60-minute maximum strength session with barbell?", "label": "workout_request"}
+{"text": "i feel short of breath, chest tightness, and nausea during barbell back squats.", "label": "safety_sensitive"}
+{"text": "Hey, have I hit my weekly workout goal for this month?", "label": "progress_inquiry"}
+{"text": "recommend a conditioning program targeting arms in 60 minutes.", "label": "workout_request"}
+{"text": "Shift my scheduled training to next Monday morning.", "label": "schedule_adjustment"}
+{"text": "My elbow hurts when doing overhead press, how do I correct my form?", "label": "exercise_technique"}
+{"text": "show my workout completion trends for the past this week.", "label": "progress_inquiry"}
+{"text": "Please what are the main coaching cues for proper overhead press mechanics?", "label": "exercise_technique"}
+{"text": "Hey, what was my average RPE across all sessions this month?", "label": "progress_inquiry"}
+{"text": "i feel short of breath, chest tightness, and nausea during barbell rows.", "label": "safety_sensitive"}
+{"text": "Hey, i have severe acute swelling in my knee, should I push through?", "label": "safety_sensitive"}
+{"text": "what is the optimal bar path or movement trajectory for bench press?", "label": "exercise_technique"}
+{"text": "Please how can I engage my full body more effectively during barbell back squats?", "label": "exercise_technique"}
+{"text": "Hey, give me a advanced push day routine using barbell.", "label": "workout_request"}
+{"text": "Can I swap Thursday and next Monday workouts this week?", "label": "schedule_adjustment"}
+{"text": "How do I configure a reverse proxy using Traefik?", "label": "out_of_scope"}
+{"text": "Hey, what tempo should I use on the eccentric phase of lunges?", "label": "exercise_technique"}
+{"text": "Please am I improving my training consistency compared to the last 90 days?", "label": "progress_inquiry"}
+{"text": "Please am I improving my training consistency compared to last week?", "label": "progress_inquiry"}
+{"text": "Please i dislocated my wrist yesterday, can I train full body today?", "label": "safety_sensitive"}
+{"text": "Please set Friday as an active recovery day instead of a heavy session.", "label": "schedule_adjustment"}
+{"text": "Please what common mistakes should I avoid when performing lunges?", "label": "exercise_technique"}
+{"text": "I dislocated my elbow yesterday, can I train glutes today?", "label": "safety_sensitive"}
+{"text": "Please i feel short of breath, chest tightness, and nausea during barbell back squats.", "label": "safety_sensitive"}
+{"text": "update my schedule so i only train on monday wednesday friday.", "label": "schedule_adjustment"}
+{"text": "a sharp shooting nerve pain is running down my leg from my lower back.", "label": "safety_sensitive"}
+{"text": "Recommend a hypertrophy program targeting chest in 75 minutes.", "label": "workout_request"}
+{"text": "What are the main causes of the historical event the Renaissance?", "label": "out_of_scope"}
+{"text": "can you suggest a athletic endurance routine for my full body session today?", "label": "workout_request"}
+{"text": "I need to shift my rest day from Friday to Wednesday evening.", "label": "schedule_adjustment"}
+{"text": "Who directed the science fiction movie Blade Runner?", "label": "out_of_scope"}
+{"text": "What common mistakes should I avoid when performing barbell rows?", "label": "exercise_technique"}
+{"text": "Reschedule today's session to Sunday due to a business trip.", "label": "schedule_adjustment"}
+{"text": "generate a report of all sets and reps logged the last 90 days.", "label": "progress_inquiry"}
+{"text": "Hey, who was the prime minister of France in 2015?", "label": "out_of_scope"}
+{"text": "Hey, write a Python script to send an email via SMTP.", "label": "out_of_scope"}
+{"text": "Hey, can you give me biomechanical cues for strict barbell back squats?", "label": "exercise_technique"}
+{"text": "Move my heavy chest day to tomorrow so I have more recovery time.", "label": "schedule_adjustment"}
+{"text": "Hey, can I reschedule my Saturday workout to Sunday?", "label": "schedule_adjustment"}
+{"text": "have i hit my weekly workout goal for the last 90 days?", "label": "progress_inquiry"}
+{"text": "create a resistance bands-only workout for glutes focusing on maximum strength.", "label": "workout_request"}
+{"text": "Please how has my consistency percentage changed over the last the last 90 days?", "label": "progress_inquiry"}
+{"text": "Can you give me biomechanical cues for strict barbell back squats?", "label": "exercise_technique"}
+{"text": "Give me a intermediate push day routine using bodyweight only.", "label": "workout_request"}
+{"text": "Hey, how do I fix a leaking refrigerator in my house?", "label": "out_of_scope"}
+{"text": "I am too busy today, move my quads session to Friday.", "label": "schedule_adjustment"}
+{"text": "show my workout completion trends for the past the last 90 days.", "label": "progress_inquiry"}
+{"text": "my elbow is throbbing and completely seized up after barbell back squats.", "label": "safety_sensitive"}
+{"text": "What are the main coaching cues for proper overhead press mechanics?", "label": "exercise_technique"}
+{"text": "I felt a sharp crushing pain in my elbow while lifting.", "label": "safety_sensitive"}
+{"text": "Can you explain the rules of the board game Settlers of Catan?", "label": "out_of_scope"}
+{"text": "Please my wrist is throbbing and completely seized up after Romanian deadlifts.", "label": "safety_sensitive"}
+{"text": "how has my consistency percentage changed over the last this month?", "label": "progress_inquiry"}
+{"text": "Hey, i am too busy today, move my full body session to next Monday.", "label": "schedule_adjustment"}
+{"text": "Hey, i am pregnant and feeling severe abdominal cramping during workouts.", "label": "safety_sensitive"}
+{"text": "what is the capital city of india?", "label": "out_of_scope"}
+{"text": "Please how do I fix a leaking sink faucet in my house?", "label": "out_of_scope"}
+{"text": "summarize my completed workouts and adherence percentage for this week.", "label": "progress_inquiry"}
+{"text": "Hey, can you explain the rules of the board game Settlers of Catan?", "label": "out_of_scope"}
+{"text": "Please i heard a loud pop in my shoulder and now it is swollen and stiff.", "label": "safety_sensitive"}
+{"text": "What is my personal record or estimated max on bench press?", "label": "progress_inquiry"}
+{"text": "i want to starve myself and drop 20 lbs in 3 days, how do i do it?", "label": "safety_sensitive"}
+{"text": "How deep should I descend during lunges for maximum shoulders engagement?", "label": "exercise_technique"}
+{"text": "Can you generate a 15-minute joint mobility session with dumbbells?", "label": "workout_request"}
+{"text": "Please how can I engage my back more effectively during barbell rows?", "label": "exercise_technique"}
+{"text": "Show my total training volume and completed sets for last week.", "label": "progress_inquiry"}
+{"text": "Show my total training volume and completed sets for this month.", "label": "progress_inquiry"}
+{"text": "Hey, reschedule today's session to Wednesday evening due to family obligations.", "label": "schedule_adjustment"}
+{"text": "Where should my elbows be positioned during barbell rows?", "label": "exercise_technique"}
+{"text": "Can you generate a 45-minute hypertrophy session with dumbbells?", "label": "workout_request"}
+{"text": "Please my eating disorder urges are returning and I feel like purging after meals.", "label": "safety_sensitive"}
+{"text": "Please analyze my training frequency and rest day balance over this week.", "label": "progress_inquiry"}
+{"text": "Create a advanced strength training program for back.", "label": "workout_request"}
+{"text": "How has my consistency percentage changed over the last the last 30 days?", "label": "progress_inquiry"}
+{"text": "Hey, explain relational database normalization in simple beginner terms.", "label": "out_of_scope"}
+{"text": "Please i am pregnant and feeling severe abdominal cramping during workouts.", "label": "safety_sensitive"}
+{"text": "set wednesday as an active recovery day instead of a heavy session.", "label": "schedule_adjustment"}
+{"text": "what is the optimal bar path or movement trajectory for overhead press?", "label": "exercise_technique"}
+{"text": "Please what is the proper foot placement for barbell back squats?", "label": "exercise_technique"}
+{"text": "Hey, shift my scheduled training to Wednesday evening morning.", "label": "schedule_adjustment"}
+{"text": "how much has my hamstrings volume increased over the last the last 30 days?", "label": "progress_inquiry"}
+{"text": "How should I structure my back workout using resistance bands?", "label": "workout_request"}
+{"text": "Can you give me biomechanical cues for strict Romanian deadlifts?", "label": "exercise_technique"}
+{"text": "can you give me biomechanical cues for strict overhead press?", "label": "exercise_technique"}
+{"text": "Give me a 30-minute arms workout using dumbbells.", "label": "workout_request"}
+{"text": "my wrist is throbbing and completely seized up after overhead press.", "label": "safety_sensitive"}
+{"text": "Please translate this greeting into conversational Japanese.", "label": "out_of_scope"}
+{"text": "Please i want a beginner workout routine for hamstrings and core.", "label": "workout_request"}
+{"text": "Please should I breathe in or out during the concentric phase of lunges?", "label": "exercise_technique"}
+{"text": "i felt a sharp crushing pain in my shoulder while lifting.", "label": "safety_sensitive"}
+{"text": "Hey, what is the distance between the Earth and the Moon?", "label": "out_of_scope"}

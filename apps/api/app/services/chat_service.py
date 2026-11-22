@@ -19,6 +19,7 @@ from app.services.system_prompts import (
 from app.services.llm_service import llm_service
 from app.core.rate_limiter import chat_rate_limiter
 from app.rag.retrieval import rag_service
+from app.services.intent_router import intent_router
 
 logger = logging.getLogger(__name__)
 
@@ -226,8 +227,11 @@ class ChatService:
         if rag_prompt_addition:
             augmented_system_prompt += f"\n\n{rag_prompt_addition}"
 
+        # Classify intent for intelligent downstream routing
+        intent_info = intent_router.classify_intent(user_prompt)
+
         # Yield meta event
-        yield f"event: meta\ndata: {json.dumps({'status': 'generating', 'safety_cleared': True, 'rag_grounded': bool(citations)})}\n\n"
+        yield f"event: meta\ndata: {json.dumps({'status': 'generating', 'safety_cleared': True, 'intent': intent_info['intent'], 'routing_target': intent_info['routing_target'], 'rag_grounded': bool(citations)})}\n\n"
 
         # 4. Stream Tokens from LLM
         history = [
