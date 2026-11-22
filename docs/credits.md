@@ -24,3 +24,17 @@ FeedGuide AI strictly enforces authentic visual media standards and respects int
 | `kettlebell-swing` | Russian kettlebell swing hip snap | Sven Mieke | Unsplash | Unsplash License (Commercial Free) | `https://unsplash.com/photos/j-X5e8n9h-c` |
 
 *Note: The complete seed dataset in `supabase/seed/01_exercises.sql` will include full attribution metadata for all 80+ exercises.*
+
+---
+
+## 3. RAG Knowledge Corpus Attribution Ledger (Phase 4)
+
+| Document | Institution / Publisher | Publication Title | License Type | Official Source URL |
+| :--- | :--- | :--- | :--- | :--- |
+| `acsm_resistance_training.md` | American College of Sports Medicine (ACSM) | ACSM Guidelines for Exercise Testing and Prescription & Position Stands on Resistance Training | Educational Reference / Fair Use Citation | `https://www.acsm.org/education-resources/trending-topics-resources/physical-activity-guidelines` |
+| `who_physical_activity.md` | World Health Organization (WHO) | WHO Guidelines on Physical Activity and Sedentary Behaviour (2020) | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO (CC BY-NC-SA 3.0 IGO) | `https://www.who.int/publications/i/item/9789240015128` |
+| `nsca_youth_athletics.md` | National Strength and Conditioning Association (NSCA) | NSCA Position Statement on Youth Resistance Training and Long-Term Athletic Development | Open Educational Position Stand | `https://www.nsca.com/education/articles/position-statements/youth-resistance-training/` |
+| `nia_older_adults_mobility.md` | National Institute on Aging (NIA) / NIH | Exercise & Physical Activity Guidelines for Healthy Aging & Sarcopenia | Public Domain (U.S. Federal Government Work) | `https://www.nia.nih.gov/health/exercise-and-physical-activity` |
+| `issn_protein_hydration.md` | International Society of Sports Nutrition (ISSN) | Position Stand: Protein and Exercise; Nutrient Timing and Fluid Balance | Creative Commons Attribution 4.0 International (CC BY 4.0) | `https://jissn.biomedcentral.com/articles/10.1186/s12970-017-0177-8` |
+| `cdc_cardiorespiratory_health.md` | Centers for Disease Control and Prevention (CDC) | Target Heart Rate and Estimated Maximum Heart Rate for Aerobic Conditioning | Public Domain (U.S. Federal Government Work) | `https://www.cdc.gov/physicalactivity/basics/measuring/heartrate.htm` |
+

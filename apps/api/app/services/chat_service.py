@@ -18,6 +18,7 @@ from app.services.system_prompts import (
 )
 from app.services.llm_service import llm_service
 from app.core.rate_limiter import chat_rate_limiter
+from app.rag.retrieval import rag_service
 
 logger = logging.getLogger(__name__)
 
@@ -173,13 +174,60 @@ class ChatService:
             yield f"event: done\ndata: {json.dumps({'message_id': str(asst_msg_id), 'status': 'completed'})}\n\n"
             return
 
-        # 3. Context Construction
+        # 3. Context & RAG Knowledge Retrieval
         user_context_str = ContextBuilder.build_user_context(user_id)
         secured_context = build_user_context_block(user_context_str)
+
+        # Retrieve relevant scientific knowledge chunks
+        retrieved_results = await rag_service.retrieve(
+            query=user_prompt,
+            age_group=age_group,
+            top_k=3,
+            threshold=0.55
+        )
+
+        # Factual query keywords check for weak-retrieval refusal
+        factual_keywords = [
+            "according to", "guideline", "scientific", "study", "research",
+            "evidence", "clinical", "recommendation", "who say", "acsm say",
+            "issn say", "cdc say", "nia say", "nsca say", "citation"
+        ]
+        is_factual_query = any(k in user_prompt.lower() for k in factual_keywords)
+
+        if is_factual_query and rag_service.is_weak_retrieval(retrieved_results, threshold=0.65):
+            # Insufficient evidence fallback
+            yield f"event: meta\ndata: {json.dumps({'status': 'weak_retrieval'})}\n\n"
+            insufficient_msg = rag_service.get_fallback_insufficient_info_message()
+            tokens = insufficient_msg.split(" ")
+            for i, token in enumerate(tokens):
+                chunk = token + (" " if i < len(tokens) - 1 else "")
+                yield f"event: token\ndata: {json.dumps({'token': chunk})}\n\n"
+
+            asst_msg_id = uuid4()
+            asst_msg = {
+                "id": asst_msg_id,
+                "conversation_id": conversation_id,
+                "sender_role": "assistant",
+                "content": insufficient_msg,
+                "citations": None,
+                "created_at": datetime.now(timezone.utc)
+            }
+            _MESSAGES_STORE[conversation_id].append(asst_msg)
+            yield f"event: done\ndata: {json.dumps({'message_id': str(asst_msg_id), 'status': 'completed'})}\n\n"
+            return
+
+        citations = []
+        rag_prompt_addition = ""
+        if retrieved_results and not rag_service.is_weak_retrieval(retrieved_results, threshold=0.55):
+            rag_prompt_addition, citations = rag_service.format_grounded_context(retrieved_results)
+            yield f"event: citations\ndata: {json.dumps({'citations': citations})}\n\n"
+
         augmented_system_prompt = f"{FEEDGUIDE_SYSTEM_PROMPT}\n\n{secured_context}"
+        if rag_prompt_addition:
+            augmented_system_prompt += f"\n\n{rag_prompt_addition}"
 
         # Yield meta event
-        yield f"event: meta\ndata: {json.dumps({'status': 'generating', 'safety_cleared': True})}\n\n"
+        yield f"event: meta\ndata: {json.dumps({'status': 'generating', 'safety_cleared': True, 'rag_grounded': bool(citations)})}\n\n"
 
         # 4. Stream Tokens from LLM
         history = [
@@ -205,6 +253,7 @@ class ChatService:
             "conversation_id": conversation_id,
             "sender_role": "assistant",
             "content": full_response_text,
+            "citations": citations if citations else None,
             "created_at": datetime.now(timezone.utc)
         }
         _MESSAGES_STORE[conversation_id].append(asst_msg)

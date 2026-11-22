@@ -23,8 +23,18 @@ import {
   Info,
   CheckCircle2,
   RefreshCw,
-  ExternalLink
+  ExternalLink,
+  BookOpen
 } from 'lucide-react';
+
+interface Citation {
+  source_number?: string;
+  title: string;
+  source_name?: string;
+  url?: string;
+  snippet?: string;
+  relevance_score?: string;
+}
 
 interface Conversation {
   id: string;
@@ -39,6 +49,7 @@ interface ChatMessage {
   id: string;
   sender_role: 'user' | 'assistant' | 'system';
   content: string;
+  citations?: Citation[];
   isStreaming?: boolean;
   isSafetyStop?: boolean;
   created_at: string;
@@ -165,6 +176,7 @@ export default function AssistantPage() {
           id: m.id,
           sender_role: m.sender_role,
           content: m.content,
+          citations: m.citations,
           isSafetyStop: m.content.includes('SAFETY INTERVENTION'),
           created_at: m.created_at
         })));
@@ -246,6 +258,13 @@ export default function AssistantPage() {
               const parsed = JSON.parse(dataStr);
               if (parsed.status === 'safety_stop') {
                 isSafety = true;
+              }
+              if (parsed.citations) {
+                setMessages(prev => prev.map(m => 
+                  m.id === assistantMessageId 
+                    ? { ...m, citations: parsed.citations } 
+                    : m
+                ));
               }
               if (parsed.token) {
                 streamedContent += parsed.token;
@@ -552,6 +571,42 @@ export default function AssistantPage() {
                           <span className="inline-block w-2 h-4 bg-lime ml-1 animate-pulse align-middle" />
                         )}
                       </div>
+
+                      {msg.citations && msg.citations.length > 0 && (
+                        <div className="mt-3 pt-3 border-t border-forest/80 space-y-2">
+                          <div className="text-[11px] font-mono text-lime uppercase tracking-wider flex items-center gap-1.5 font-bold">
+                            <BookOpen className="w-3.5 h-3.5" />
+                            Grounded Scientific Evidence ({msg.citations.length} Sources)
+                          </div>
+                          <div className="grid grid-cols-1 gap-1.5">
+                            {msg.citations.map((cite, cIdx) => (
+                              <div
+                                key={cIdx}
+                                className="bg-carbon/70 border border-forest/80 p-2.5 rounded text-xs text-sand flex flex-col gap-1"
+                              >
+                                <div className="flex items-center justify-between text-chalk font-semibold">
+                                  <span>{cite.title}</span>
+                                  {cite.url && (
+                                    <a
+                                      href={cite.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-lime hover:underline flex items-center gap-1 font-mono text-[10px]"
+                                    >
+                                      Source <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                  )}
+                                </div>
+                                {cite.snippet && (
+                                  <p className="text-[11px] text-sand/80 line-clamp-2 italic">
+                                    &ldquo;{cite.snippet}&rdquo;
+                                  </p>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
