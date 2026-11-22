@@ -3,7 +3,9 @@ from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional, AsyncIterator
 import json
 import logging
+import httpx
 
+from app.core.config import settings
 from app.schemas.chat import (
     ConversationResponse, MessageResponse, AIWorkoutRecommendation,
     StructuredExerciseRef
@@ -27,6 +29,110 @@ logger = logging.getLogger(__name__)
 _CONVERSATIONS_STORE: Dict[UUID, Dict[str, Any]] = {}
 _MESSAGES_STORE: Dict[UUID, List[Dict[str, Any]]] = {} # conversation_id -> messages
 
+def _supabase_headers():
+    return {
+        "apikey": settings.SUPABASE_SERVICE_ROLE_KEY or "",
+        "Authorization": f"Bearer {settings.SUPABASE_SERVICE_ROLE_KEY or ''}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+    }
+
+def _supabase_sync_conversation_to_db(conv: Dict[str, Any]):
+    if not (settings.SUPABASE_URL and not settings.SUPABASE_URL.startswith("https://mock") and settings.SUPABASE_SERVICE_ROLE_KEY):
+        return
+    try:
+        url = f"{settings.SUPABASE_URL.rstrip('/')}/rest/v1/conversations"
+        payload = {
+            "id": str(conv["id"]),
+            "user_id": str(conv["user_id"]),
+            "title": conv["title"],
+            "created_at": conv["created_at"].isoformat() if isinstance(conv["created_at"], datetime) else str(conv["created_at"]),
+            "updated_at": conv["updated_at"].isoformat() if isinstance(conv["updated_at"], datetime) else str(conv["updated_at"])
+        }
+        headers = _supabase_headers()
+        headers["Prefer"] = "resolution=merge-duplicates"
+        with httpx.Client(timeout=4.0) as client:
+            client.post(url, json=[payload], headers=headers)
+    except Exception as e:
+        logger.warning(f"Supabase conversation sync warning: {e}")
+
+def _supabase_sync_message_to_db(msg: Dict[str, Any], user_id: UUID):
+    if not (settings.SUPABASE_URL and not settings.SUPABASE_URL.startswith("https://mock") and settings.SUPABASE_SERVICE_ROLE_KEY):
+        return
+    try:
+        url = f"{settings.SUPABASE_URL.rstrip('/')}/rest/v1/messages"
+        payload = {
+            "id": str(msg["id"]),
+            "conversation_id": str(msg["conversation_id"]),
+            "user_id": str(user_id),
+            "sender_role": msg["sender_role"],
+            "content": msg["content"],
+            "citations": msg.get("citations") or [],
+            "structured_data": msg.get("recommendation") or {},
+            "created_at": msg["created_at"].isoformat() if isinstance(msg["created_at"], datetime) else str(msg["created_at"])
+        }
+        with httpx.Client(timeout=4.0) as client:
+            client.post(url, json=[payload], headers=_supabase_headers())
+    except Exception as e:
+        logger.warning(f"Supabase message sync warning: {e}")
+
+def _supabase_fetch_conversations(user_id: UUID) -> Optional[List[Dict[str, Any]]]:
+    if not (settings.SUPABASE_URL and not settings.SUPABASE_URL.startswith("https://mock") and settings.SUPABASE_SERVICE_ROLE_KEY):
+        return None
+    try:
+        url = f"{settings.SUPABASE_URL.rstrip('/')}/rest/v1/conversations?user_id=eq.{user_id}&order=updated_at.desc"
+        with httpx.Client(timeout=4.0) as client:
+            res = client.get(url, headers=_supabase_headers())
+            if res.status_code == 200:
+                data = res.json()
+                results = []
+                for row in data:
+                    c_id = UUID(row["id"])
+                    dt_created = datetime.fromisoformat(row["created_at"].replace("Z", "+00:00")) if isinstance(row["created_at"], str) else row["created_at"]
+                    dt_updated = datetime.fromisoformat(row["updated_at"].replace("Z", "+00:00")) if isinstance(row["updated_at"], str) else row["updated_at"]
+                    conv = {
+                        "id": c_id,
+                        "user_id": user_id,
+                        "title": row.get("title") or "Consultation",
+                        "created_at": dt_created,
+                        "updated_at": dt_updated
+                    }
+                    _CONVERSATIONS_STORE[c_id] = conv
+                    results.append(conv)
+                return results
+    except Exception as e:
+        logger.warning(f"Failed to fetch conversations from Supabase: {e}")
+    return None
+
+def _supabase_fetch_messages(conversation_id: UUID) -> Optional[List[Dict[str, Any]]]:
+    if not (settings.SUPABASE_URL and not settings.SUPABASE_URL.startswith("https://mock") and settings.SUPABASE_SERVICE_ROLE_KEY):
+        return None
+    try:
+        url = f"{settings.SUPABASE_URL.rstrip('/')}/rest/v1/messages?conversation_id=eq.{conversation_id}&order=created_at.asc"
+        with httpx.Client(timeout=4.0) as client:
+            res = client.get(url, headers=_supabase_headers())
+            if res.status_code == 200:
+                data = res.json()
+                results = []
+                for row in data:
+                    m_id = UUID(row["id"])
+                    dt_created = datetime.fromisoformat(row["created_at"].replace("Z", "+00:00")) if isinstance(row["created_at"], str) else row["created_at"]
+                    msg = {
+                        "id": m_id,
+                        "conversation_id": conversation_id,
+                        "sender_role": row["sender_role"],
+                        "content": row["content"],
+                        "citations": row.get("citations"),
+                        "recommendation": row.get("structured_data"),
+                        "created_at": dt_created
+                    }
+                    results.append(msg)
+                _MESSAGES_STORE[conversation_id] = results
+                return results
+    except Exception as e:
+        logger.warning(f"Failed to fetch messages from Supabase: {e}")
+    return None
+
 class ChatService:
     """
     Orchestrates conversation lifecycle, grounded context construction,
@@ -35,6 +141,9 @@ class ChatService:
 
     @classmethod
     def list_conversations(cls, user_id: UUID) -> List[ConversationResponse]:
+        # Sync remote Supabase records into memory
+        _supabase_fetch_conversations(user_id)
+
         user_threads = [
             conv for conv in _CONVERSATIONS_STORE.values()
             if conv.get("user_id") == user_id
@@ -47,8 +156,8 @@ class ChatService:
                 id=str(conv["id"]),
                 user_id=str(conv["user_id"]),
                 title=conv["title"],
-                created_at=conv["created_at"].isoformat(),
-                updated_at=conv["updated_at"].isoformat(),
+                created_at=conv["created_at"].isoformat() if isinstance(conv["created_at"], datetime) else str(conv["created_at"]),
+                updated_at=conv["updated_at"].isoformat() if isinstance(conv["updated_at"], datetime) else str(conv["updated_at"]),
                 message_count=len(_MESSAGES_STORE.get(conv["id"], []))
             )
             for conv in user_threads
@@ -69,6 +178,7 @@ class ChatService:
         }
         _CONVERSATIONS_STORE[conv_id] = record
         _MESSAGES_STORE[conv_id] = []
+        _supabase_sync_conversation_to_db(record)
 
         return ConversationResponse(
             id=str(conv_id),
@@ -82,10 +192,15 @@ class ChatService:
     @classmethod
     def get_conversation_messages(cls, user_id: UUID, conversation_id: UUID) -> List[MessageResponse]:
         conv = _CONVERSATIONS_STORE.get(conversation_id)
+        if not conv:
+            _supabase_fetch_conversations(user_id)
+            conv = _CONVERSATIONS_STORE.get(conversation_id)
+
         if not conv or conv.get("user_id") != user_id:
             raise KeyError("Conversation not found or access denied")
 
-        msgs = _MESSAGES_STORE.get(conversation_id, [])
+        remote_msgs = _supabase_fetch_messages(conversation_id)
+        msgs = remote_msgs if remote_msgs is not None else _MESSAGES_STORE.get(conversation_id, [])
         return [
             MessageResponse(
                 id=str(m["id"]),
@@ -94,7 +209,7 @@ class ChatService:
                 content=m["content"],
                 citations=m.get("citations"),
                 recommendation=m.get("recommendation"),
-                created_at=m["created_at"].isoformat()
+                created_at=m["created_at"].isoformat() if isinstance(m["created_at"], datetime) else str(m["created_at"])
             )
             for m in msgs
         ]
@@ -102,6 +217,9 @@ class ChatService:
     @classmethod
     def validate_access(cls, user_id: UUID, conversation_id: UUID) -> Dict[str, Any]:
         conv = _CONVERSATIONS_STORE.get(conversation_id)
+        if not conv:
+            _supabase_fetch_conversations(user_id)
+            conv = _CONVERSATIONS_STORE.get(conversation_id)
         if not conv or conv.get("user_id") != user_id:
             raise KeyError("Conversation not found or unauthorized")
         return conv
@@ -130,6 +248,7 @@ class ChatService:
             "created_at": now
         }
         _MESSAGES_STORE.setdefault(conversation_id, []).append(user_msg)
+        _supabase_sync_message_to_db(user_msg, user_id)
 
         # Update conversation title if first message
         if conv["title"] == "New Consultation" and len(_MESSAGES_STORE[conversation_id]) <= 2:
@@ -137,6 +256,7 @@ class ChatService:
             conv["title"] = snippet
 
         conv["updated_at"] = now
+        _supabase_sync_conversation_to_db(conv)
 
         # 2. Safety Evaluation
         prefs = ProfileService.get_preferences(user_id)
@@ -171,6 +291,7 @@ class ChatService:
                 "created_at": datetime.now(timezone.utc)
             }
             _MESSAGES_STORE[conversation_id].append(asst_msg)
+            _supabase_sync_message_to_db(asst_msg, user_id)
 
             yield f"event: done\ndata: {json.dumps({'message_id': str(asst_msg_id), 'status': 'completed'})}\n\n"
             return
@@ -214,6 +335,7 @@ class ChatService:
                 "created_at": datetime.now(timezone.utc)
             }
             _MESSAGES_STORE[conversation_id].append(asst_msg)
+            _supabase_sync_message_to_db(asst_msg, user_id)
             yield f"event: done\ndata: {json.dumps({'message_id': str(asst_msg_id), 'status': 'completed'})}\n\n"
             return
 
@@ -261,6 +383,7 @@ class ChatService:
             "created_at": datetime.now(timezone.utc)
         }
         _MESSAGES_STORE[conversation_id].append(asst_msg)
+        _supabase_sync_message_to_db(asst_msg, user_id)
 
         yield f"event: done\ndata: {json.dumps({'message_id': str(asst_msg_id), 'status': 'completed'})}\n\n"
 
