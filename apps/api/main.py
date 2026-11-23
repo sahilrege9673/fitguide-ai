@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+import logging
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -6,13 +8,43 @@ from datetime import datetime, timezone
 
 from app.core.config import settings
 from app.routers.v1 import health, auth, onboarding, exercises, workouts, schedule, profile, chat, progress
+from app.services.intent_router import intent_router
+from app.services.exercise_service import ExerciseService
+from app.rag.retrieval import rag_service
+
+logger = logging.getLogger("fitguide")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Proactively pre-warm core engines into memory on boot
+    # Eliminates 24-second first-request cold-start penalty
+    try:
+        logger.info("Lifespan: Pre-warming exercise catalog...")
+        ExerciseService._build_catalog()
+    except Exception as e:
+        logger.warning(f"Catalog pre-warm warning: {e}")
+
+    try:
+        logger.info("Lifespan: Pre-warming ML intent classifier...")
+        intent_router.get_model()
+    except Exception as e:
+        logger.warning(f"ML intent classifier pre-warm warning: {e}")
+
+    try:
+        logger.info("Lifespan: Pre-warming RAG knowledge corpus...")
+        await rag_service.initialize_store()
+    except Exception as e:
+        logger.warning(f"RAG store pre-warm warning: {e}")
+
+    yield
 
 app = FastAPI(
     title="FitGuide AI API",
     description="Engineered Fitness Companion API with strict safety guardrails and RLS isolation.",
     version="1.0.0",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
+    lifespan=lifespan
 )
 
 # CORS Middleware

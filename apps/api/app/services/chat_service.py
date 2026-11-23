@@ -129,8 +129,10 @@ def _supabase_fetch_messages(conversation_id: UUID) -> Optional[List[Dict[str, A
                         "created_at": dt_created
                     }
                     results.append(msg)
-                _MESSAGES_STORE[conversation_id] = results
-                return results
+                if results:
+                    _MESSAGES_STORE[conversation_id] = results
+                    return results
+                return None
     except Exception as e:
         logger.warning(f"Failed to fetch messages from Supabase: {e}")
     return None
@@ -202,7 +204,7 @@ class ChatService:
             raise KeyError("Conversation not found or access denied")
 
         remote_msgs = _supabase_fetch_messages(conversation_id)
-        msgs = remote_msgs if remote_msgs is not None else _MESSAGES_STORE.get(conversation_id, [])
+        msgs = remote_msgs if remote_msgs else _MESSAGES_STORE.get(conversation_id, [])
         return [
             MessageResponse(
                 id=str(m["id"]),

@@ -25,6 +25,7 @@ ROUTING_TARGETS = {
 
 class IntentRouterService:
     _MODEL = None
+    _CACHE: Dict[str, Dict[str, Any]] = {}
 
     @classmethod
     def get_model(cls):
@@ -42,7 +43,6 @@ class IntentRouterService:
         Classifies user query intent across 6 domain classes.
         Returns predicted intent, confidence score, and downstream routing target.
         """
-        model = cls.get_model()
         clean_query = query.strip()
         if not clean_query:
             return {
@@ -51,17 +51,24 @@ class IntentRouterService:
                 "routing_target": ROUTING_TARGETS["out_of_scope"]
             }
 
+        cache_key = clean_query.lower()
+        if cache_key in cls._CACHE:
+            return cls._CACHE[cache_key]
+
+        model = cls.get_model()
         if model is not None:
             try:
-                pred = model.predict([clean_query])[0]
+                pred = str(model.predict([clean_query])[0])
                 probs = model.predict_proba([clean_query])[0]
-                classes = list(model.classes_)
+                classes = [str(c) for c in model.classes_]
                 confidence = float(probs[classes.index(pred)])
-                return {
+                res = {
                     "intent": pred,
                     "confidence": round(confidence, 4),
                     "routing_target": ROUTING_TARGETS.get(pred, "general_dialogue")
                 }
+                cls._CACHE[cache_key] = res
+                return res
             except Exception as e:
                 logger.warning(f"ML intent prediction failed: {e}")
 

@@ -84,24 +84,34 @@ export default function DashboardPage() {
         return;
       }
 
-      const prof = await apiClient<ProfileData>('/auth/me');
-      setProfile(prof);
+      // Parallelized execution: load athlete profile, preferences, today's session, and history concurrently
+      const [profRes, prefsRes, todayRes, histRes] = await Promise.allSettled([
+        apiClient<ProfileData>('/auth/me'),
+        apiClient<OnboardingData>('/onboarding'),
+        apiClient<WorkoutSession | null>('/workouts/today'),
+        apiClient<WorkoutSession[]>('/workouts/history')
+      ]);
 
-      const prefs = await apiClient<OnboardingData>('/onboarding').catch(() => null);
-      setPreferences(prefs);
+      if (profRes.status === 'fulfilled') {
+        const prof = profRes.value;
+        setProfile(prof);
+        const prefs = prefsRes.status === 'fulfilled' ? prefsRes.value : null;
+        setPreferences(prefs);
 
-      if (!prof.has_completed_onboarding && !prefs) {
-        router.push('/onboarding');
-        return;
+        if (!prof.has_completed_onboarding && !prefs) {
+          router.push('/onboarding');
+          return;
+        }
+      } else {
+        throw profRes.reason;
       }
 
-      // Fetch today's workout
-      const today = await apiClient<WorkoutSession | null>('/workouts/today').catch(() => null);
-      setTodaySession(today);
-
-      // Fetch history
-      const hist = await apiClient<WorkoutSession[]>('/workouts/history').catch(() => []);
-      setHistory(hist);
+      if (todayRes.status === 'fulfilled') {
+        setTodaySession(todayRes.value);
+      }
+      if (histRes.status === 'fulfilled') {
+        setHistory(histRes.value || []);
+      }
     } catch (err: unknown) {
       if (err instanceof ApiError && err.code === 'UNAUTHORIZED') {
         router.push('/login');

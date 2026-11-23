@@ -4,6 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { invalidateAuthCache } from '@/lib/api/client';
 import { 
   LayoutDashboard, 
   Dumbbell, 
@@ -48,6 +49,7 @@ export function AppShell({ children }: AppShellProps) {
 
   const handleSignOut = async () => {
     try {
+      invalidateAuthCache();
       const supabase = createClient();
       await supabase.auth.signOut();
       router.push('/login');
@@ -83,6 +85,7 @@ export function AppShell({ children }: AppShellProps) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  prefetch={true}
                   className={`flex items-center justify-between px-3.5 py-2.5 rounded-sm text-xs font-mono uppercase tracking-wider transition-colors duration-fast ${
                     isActive
                       ? 'bg-forest text-lime border-l-2 border-lime font-semibold'
@@ -188,6 +191,7 @@ export function AppShell({ children }: AppShellProps) {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={true}
               className={`flex flex-col items-center justify-center min-w-[56px] h-full ${
                 isActive ? 'text-lime' : 'text-sand'
               }`}

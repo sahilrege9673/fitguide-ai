@@ -46,11 +46,17 @@ export default function WorkoutsHubPage() {
     setIsLoading(true);
     setErrorMsg(null);
     try {
-      const today = await apiClient<WorkoutSession | null>('/workouts/today').catch(() => null);
-      setTodaySession(today);
+      const [todayRes, histRes] = await Promise.allSettled([
+        apiClient<WorkoutSession | null>('/workouts/today'),
+        apiClient<WorkoutSession[]>('/workouts/history')
+      ]);
 
-      const hist = await apiClient<WorkoutSession[]>('/workouts/history').catch(() => []);
-      setHistory(hist);
+      if (todayRes.status === 'fulfilled') {
+        setTodaySession(todayRes.value);
+      }
+      if (histRes.status === 'fulfilled') {
+        setHistory(histRes.value || []);
+      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Failed to fetch workouts';
       setErrorMsg(msg);

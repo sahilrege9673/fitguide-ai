@@ -27,6 +27,34 @@ export function getApiBaseUrl(): string {
 
 export const API_BASE_URL = getApiBaseUrl();
 
+let _cachedToken: string | null = null;
+let _tokenExpiry: number = 0;
+
+export async function getAuthToken(): Promise<string | null> {
+  const now = Date.now();
+  if (_cachedToken && now < _tokenExpiry) {
+    return _cachedToken;
+  }
+  try {
+    const supabase = createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.access_token) {
+      _cachedToken = session.access_token;
+      _tokenExpiry = now + 30000; // 30-second in-memory cache
+      return _cachedToken;
+    }
+  } catch {
+    // fallback
+  }
+  _cachedToken = null;
+  return null;
+}
+
+export function invalidateAuthCache(): void {
+  _cachedToken = null;
+  _tokenExpiry = 0;
+}
+
 export class ApiError extends Error {
   code: string;
   details: Array<{ field?: string; issue: string }>;
@@ -43,16 +71,15 @@ export async function apiClient<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const supabase = createClient();
-  const { data: { session } } = await supabase.auth.getSession();
+  const token = await getAuthToken();
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string> || {}),
   };
 
-  if (session?.access_token) {
-    headers['Authorization'] = `Bearer ${session.access_token}`;
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
 
   const baseUrl = getApiBaseUrl();
